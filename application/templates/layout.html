@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TodoApp</title>
+  </head>
+
+  <body>
+    <ul>
+      <li><a href="{{ url_for('creatures_index') }}">List creatures</a></li>
+      <li><a href="{{ url_for('creatures_form') }}">Add a creature</a></li>
+          </ul>
+    {% block body %}
+      <p>
+        Content.
+      </p>
+    {% endblock %}
+  </body>
+</html>
