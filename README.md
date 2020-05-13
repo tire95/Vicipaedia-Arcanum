@@ -4,6 +4,10 @@ Vicipaedia Arcanum (tästä lähtien *VA*) on nettipalvelimella toimiva tietosan
 
 Kun kampanja luodaan, se voidaan suojata salasanalla, jotta vain tietyt käyttäjät voivat liittyä siihen. Kampanjaan liittyneet käyttäjät voivat vapaasti lisätä ja muokata tietokannan hirviöitä.
 
+Tällä hetkellä *VA* tukee rajoitetusti vain hirviöiden lisäämistä ja listaamista.
+
+[Linkki Heroku-pilvipalvelimella pyörivään sovellukseen](https://vicipaedia-arcanum.herokuapp.com/)
+
 ## Tietokantakaavio
 
 ![kaavio](/documentation/Pictures/DBDiagram.png)
