@@ -1,12 +1,13 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<table>
+<table style="width: 100%">
     <tr>
         <th>Name</th>
         <th>Type</th>
         <th>Size</th>
         <th>Notes</th>
+        <th></th>
     </tr>
     {% for creature in creatures %}
     <tr>
@@ -14,6 +15,11 @@
         <td>{{ creature.type }}</td>
         <td>{{ creature.size }}</td>
         <td>{{ creature.notes }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('remove_creature', creature_id=creature.id) }}">
+                <input type="submit" value="Remove creature"/>
+            </form>
+        </td>
     </tr>
     {% endfor %}
 </table>
