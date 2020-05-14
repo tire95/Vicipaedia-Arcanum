@@ -2,10 +2,71 @@
 
 {% block body %}
 <form method="POST" action="{{ url_for('creatures_create') }}">
-    <input type="text" name="name" />
-    <input type="text" name="type" />
-    <input type="text" name="size" />
-    <input type="text" name="notes" />
-    <input type="submit" value="Add a new creature" />
+    <table>
+        <tr>
+            <td>
+                {{ form.name.label }}
+            </td>
+            <td>
+                {{ form.name }}
+            </td>
+            <td>
+                <ul>
+                  {% for error in form.name.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.type.label }}
+            </td>
+            <td>
+                {{ form.type }}
+            </td>
+            <td>
+                <ul>
+                  {% for error in form.type.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.size.label }}
+            </td>
+            <td>
+                {{ form.size }}
+            </td>
+            <td>
+                <ul>
+                  {% for error in form.size.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.notes.label }}
+            </td>
+            <td>
+                {{ form.notes }}
+            </td>
+            <td>
+                <ul>
+                  {% for error in form.notes.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Add a new creature"/>
+            </td>
+        </tr>
 </form>
 {% endblock %}
