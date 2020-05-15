@@ -1,20 +1,24 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for
+from flask_login import login_required
 from application.creatures.models import Creature
 from application.creatures.forms import CreatureForm
 
 
 @app.route("/creatures", methods=["GET"])
+@login_required
 def creatures_index():
     return render_template("creatures/list.html", creatures=Creature.query.all())
 
 
 @app.route("/creatures/new/")
+@login_required
 def creatures_form():
     return render_template("creatures/new.html", form = CreatureForm())
 
 
 @app.route("/creatures/<creature_id>/", methods=["POST"])
+@login_required
 def remove_creature(creature_id):
 
     db.session.query(Creature).filter(Creature.id==creature_id).delete()
@@ -24,6 +28,7 @@ def remove_creature(creature_id):
 
 
 @app.route("/creatures/", methods=["POST"])
+@login_required
 def creatures_create():
     form = CreatureForm(request.form)
 

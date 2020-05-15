@@ -6,6 +6,13 @@
   </head>
 
   <body>
+    {% if current_user.is_authenticated %}
+    <p>
+	    Logged in as {{ current_user.username }}. <a href="{{ url_for('auth_logout') }}">Log out</a>
+    </p>
+    {% else %}
+    <a href="{{ url_for('auth_login') }}">Log in</a> or <a href="{{ url_for('auth_register') }}">create a new account</a>
+    {% endif %}
     <ul>
       <li><a href="{{ url_for('creatures_index') }}">List creatures</a></li>
       <li><a href="{{ url_for('creatures_form') }}">Add a creature</a></li>
