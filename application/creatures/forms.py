@@ -9,3 +9,11 @@ class CreatureForm(FlaskForm):
  
     class Meta:
         csrf = False
+
+class ModifyForm(FlaskForm):
+    type = StringField("Creature type", [validators.Length(min=2, max=10)])
+    size = StringField("Creature size", [validators.Length(min=2, max=10)])
+    notes = StringField("Notes about the creature", [validators.Length(max=144)])
+ 
+    class Meta:
+        csrf = False

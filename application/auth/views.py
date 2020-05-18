@@ -14,7 +14,7 @@ def auth_login():
     if not form.validate():
         return render_template("auth/loginform.html", form = form)
 
-    user = User.query.filter_by(username=form.username.data).first()
+    user = db.session.query(User).filter_by(username=form.username.data).first()
     if user and bcrypt.check_password_hash(user.password, form.password.data):
         login_user(user)
         return redirect(url_for("creatures_index"))
@@ -37,7 +37,7 @@ def auth_register():
     if not form.validate():
         return render_template("auth/registerform.html", form = form)
 
-    user = User.query.filter_by(username=form.username.data).first()
+    user = db.session.query(User).filter_by(username=form.username.data).first()
     if user:
         return render_template("auth/registerform.html", form = form,
                                error = "Account name is already taken")

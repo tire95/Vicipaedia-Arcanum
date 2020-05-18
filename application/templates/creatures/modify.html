@@ -1,23 +1,10 @@
 {% extends "layout.html" %}
+
 {% block body %}
-{{ error }}
-<form method="POST" action="{{ url_for('creatures_create') }}">
+
+<p>Modify creature: {{ creature.name }}</p>
+<form method="POST" action="{{ url_for('modify_creature', creature_id=creature.id) }}">
     <table>
-        <tr>
-            <td>
-                {{ form.name.label }}
-            </td>
-            <td>
-                {{ form.name }}
-            </td>
-            <td>
-                <ul>
-                  {% for error in form.name.errors %}
-                  <li>{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-        </tr>
         <tr>
             <td>
                 {{ form.type.label }}
@@ -65,7 +52,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" value="Add a new creature"/>
+                <input type="submit" value="Modify the creature"/>
             </td>
         </tr>
 </form>

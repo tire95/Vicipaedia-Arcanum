@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table style="width: 100%">
+    <tr>
+        <td>Name: {{ creature.name }}</td>
+    </tr>
+    <tr>
+        <td>Type: {{ creature.type }}</td>
+    </tr>
+    <tr>
+        <td>Size: {{ creature.size}}</td>
+    </tr>
+</table>
+<p>Notes: {{ creature.notes }}</p>
+<form method="GET" action="{{ url_for('modify_creature', creature_id=creature.id) }}">
+    <input type="submit" value="Modify creature"/>
+</form>
+<form method="POST" action="{{ url_for('remove_creature', creature_id=creature.id) }}">
+    <input type="submit" value="Remove creature"/>
+</form>
+
+{% endblock %}
