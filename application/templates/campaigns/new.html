@@ -1,7 +1,7 @@
-{% extends "layout2.html" %}
+{% extends "layout.html" %}
 {% block body %}
 {{ error }}
-<form method="POST" action="{{ url_for('creatures_create', campaign_id=campaign_id) }}">
+<form method="POST" action="{{ url_for('campaigns_create') }}">
     <table>
         <tr>
             <td>
@@ -20,14 +20,14 @@
         </tr>
         <tr>
             <td>
-                {{ form.type.label }}
+                {{ form.game_system.label }}
             </td>
             <td>
-                {{ form.type }}
+                {{ form.game_system }}
             </td>
             <td>
                 <ul>
-                  {% for error in form.type.errors %}
+                  {% for error in form.game_system.errors %}
                   <li>{{ error }}</li>
                   {% endfor %}
                 </ul>
@@ -35,29 +35,14 @@
         </tr>
         <tr>
             <td>
-                {{ form.size.label }}
+                {{ form.password.label }}
             </td>
             <td>
-                {{ form.size }}
-            </td>
-            <td>
-                <ul>
-                  {% for error in form.size.errors %}
-                  <li>{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-        </tr>
-        <tr>
-            <td>
-                {{ form.notes.label }}
-            </td>
-            <td>
-                {{ form.notes }}
+                {{ form.password }}
             </td>
             <td>
                 <ul>
-                  {% for error in form.notes.errors %}
+                  {% for error in form.password.errors %}
                   <li>{{ error }}</li>
                   {% endfor %}
                 </ul>
@@ -65,7 +50,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" value="Add a new creature"/>
+                <input type="submit" value="Create a new campaign"/>
             </td>
         </tr>
 </form>

@@ -14,6 +14,10 @@
       <li><a href="{{ url_for('campaigns_index') }}">List campaigns</a></li>
       <li><a href="{{ url_for('campaigns_create') }}">Create a new campaign</a></li>
     </ul>
+    <ul>
+      <li><a href="{{ url_for('creatures_index', campaign_id=campaign_id) }}">List creatures</a></li>
+      <li><a href="{{ url_for('creatures_form', campaign_id=campaign_id) }}">Add a creature</a></li>
+    </ul>
     {% else %}
     <a href="{{ url_for('auth_login') }}">Log in</a> or <a href="{{ url_for('auth_register') }}">create a new account</a>
     {% endif %}

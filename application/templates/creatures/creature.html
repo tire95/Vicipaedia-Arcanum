@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout2.html" %}
 
 {% block body %}
 <table style="width: 100%">
@@ -13,10 +13,10 @@
     </tr>
 </table>
 <p>Notes: {{ creature.notes }}</p>
-<form method="GET" action="{{ url_for('modify_creature', creature_id=creature.id) }}">
+<form method="GET" action="{{ url_for('modify_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
     <input type="submit" value="Modify creature"/>
 </form>
-<form method="POST" action="{{ url_for('remove_creature', creature_id=creature.id) }}">
+<form method="POST" action="{{ url_for('remove_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
     <input type="submit" value="Remove creature"/>
 </form>
 

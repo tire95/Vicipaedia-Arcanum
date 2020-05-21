@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Game system</th>
+        <th></th>
+    </tr>
+    {% for campaign in campaigns %}
+    <tr>
+        <td>{{ campaign.name }}</td>
+        <td>{{ campaign.game_system}}</td>
+        <td>
+            <form method="GET" action="{{ url_for('campaigns_register', campaign_id=campaign.id) }}">
+                <input type="submit" value="Join campaign"/>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

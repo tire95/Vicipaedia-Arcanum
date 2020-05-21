@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout2.html" %}
 
 {% block body %}
 <table>
@@ -10,7 +10,7 @@
     <tr>
         <td>{{ creature.name }}</td>
         <td>
-            <form method="GET" action="{{ url_for('open_creature', creature_id=creature.id) }}">
+            <form method="GET" action="{{ url_for('open_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
                 <input type="submit" value="Open creature"/>
             </form>
         </td>
