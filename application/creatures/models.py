@@ -10,7 +10,7 @@ class Creature(db.Model):
     name = db.Column(db.String(20), nullable=False)
     type = db.Column(db.String(10), nullable=False)
     size = db.Column(db.String(10), nullable=False)
-    notes = db.Column(db.String(144), nullable=True)
+    notes = db.Column(db.String(1000), nullable=True)
 
     def __init__(self, name, type, size, notes):
         self.name = name
