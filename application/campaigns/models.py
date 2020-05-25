@@ -1,5 +1,9 @@
 from application import db, bcrypt
 
+association_table = db.Table('association',
+    db.Column('account_id', db.Integer, db.ForeignKey('account.id')),
+    db.Column('campaign_id', db.Integer, db.ForeignKey('campaign.id'))
+)
 
 class Campaign(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -12,9 +16,13 @@ class Campaign(db.Model):
     password = db.Column(db.String(144), nullable=True)
 
     creatures = db.relationship("Creature", backref="campaign", lazy=True)
+    accounts = db.relationship("Account", secondary=association_table)
 
     def __init__(self, name, game_system, password):
         self.name = name
         self.game_system = game_system
         if password:
             self.password = bcrypt.generate_password_hash(password)
+
+def check_account(campaign_id, user):
+    return db.session.query(Campaign).filter(Campaign.id==campaign_id).filter(Campaign.accounts.contains(user)).first()

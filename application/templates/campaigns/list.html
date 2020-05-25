@@ -1,6 +1,16 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<p>Joined campaigns: </p>
+{% for campaign in joined_campaigns %}
+<a href="{{ url_for('campaigns_register', campaign_id=campaign.id) }}">{{ campaign.name }}</a>
+<p></p>
+{% else %}
+<p>Looks like you've not joined any campaign. Join a campaign below.</p>
+{% endfor %}
+
+<p>All campaigns:</p>
+
 <table>
     <tr>
         <th>Name</th>
