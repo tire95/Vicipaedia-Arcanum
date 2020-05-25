@@ -13,7 +13,7 @@ class Account(db.Model):
 
     def __init__(self, username, password):
         self.username = username
-        self.password = bcrypt.generate_password_hash(password)
+        self.password = bcrypt.generate_password_hash(password).decode("utf8")
   
     def get_id(self):
         return self.id

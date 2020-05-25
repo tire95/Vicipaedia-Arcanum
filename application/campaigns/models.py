@@ -22,7 +22,7 @@ class Campaign(db.Model):
         self.name = name
         self.game_system = game_system
         if password:
-            self.password = bcrypt.generate_password_hash(password)
+            self.password = bcrypt.generate_password_hash(password).decode("utf8")
 
 def check_account(campaign_id, user):
     return db.session.query(Campaign).filter(Campaign.id==campaign_id).filter(Campaign.accounts.contains(user)).first()
