@@ -35,10 +35,15 @@ def campaigns_index():
 @app.route("/campaigns/register/<campaign_id>", methods=["GET", "POST"])
 @login_required
 def campaigns_register(campaign_id):
+
+    # If the user has already registered to the campaign, just direct them straight to the campaign's page
     if check_account(campaign_id, current_user):
         return redirect(url_for("creatures_index", campaign_id=campaign_id))
+
     campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
     form = RegisterForm(request.form)
+
+    # If the campaign has no password or the password is correct, register the account
     if not campaign.password or (form.validate() and bcrypt.check_password_hash(campaign.password, form.password.data)):
         campaign.accounts.append(current_user)
         db.session.commit()

@@ -1,5 +1,6 @@
 from application import db, bcrypt
 
+# Association table between accounts and campaigns
 association_table = db.Table('association',
     db.Column('account_id', db.Integer, db.ForeignKey('account.id')),
     db.Column('campaign_id', db.Integer, db.ForeignKey('campaign.id'))
@@ -24,5 +25,6 @@ class Campaign(db.Model):
         if password:
             self.password = bcrypt.generate_password_hash(password).decode("utf8")
 
+# Function for checking whether a certain user is already registered to a campaign 
 def check_account(campaign_id, user):
     return db.session.query(Campaign).filter(Campaign.id==campaign_id).filter(Campaign.accounts.contains(user)).first()
