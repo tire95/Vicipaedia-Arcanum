@@ -8,7 +8,7 @@
   <body>
     {% if current_user.is_authenticated %}
     <p>
-	    Logged in as {{ current_user.username }}. <a href="{{ url_for('auth_logout') }}">Log out</a>
+	    Logged in as {{ current_user.name }}. <a href="{{ url_for('auth_logout') }}">Log out</a>
     </p>
     <ul>
       <li><a href="{{ url_for('campaigns_index') }}">List campaigns</a></li>

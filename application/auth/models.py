@@ -1,18 +1,13 @@
 from application import db, bcrypt
+from application.models import NameBase
 
 
-class Account(db.Model):
+class Account(NameBase):
   
-    id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
-                              onupdate=db.func.current_timestamp())
-
-    username = db.Column(db.String(20), nullable=False)
     password = db.Column(db.String(144), nullable=False)
 
-    def __init__(self, username, password):
-        self.username = username
+    def __init__(self, name, password):
+        self.name = name
         self.password = bcrypt.generate_password_hash(password).decode("utf8")
   
     def get_id(self):
