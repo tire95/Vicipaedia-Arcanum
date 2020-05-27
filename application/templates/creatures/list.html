@@ -15,6 +15,10 @@
             </form>
         </td>
     </tr>
+    {% else %}
+    <tr></tr>
+        <td>It's strangely empty. Perhaps you should add a creature here.</td>
+        <td></td>
     {% endfor %}
 </table>
 {% endblock %}

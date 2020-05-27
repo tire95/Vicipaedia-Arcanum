@@ -1,7 +1,12 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <p>
-    Hello world!
-  </p>
+  <h1>
+    Welcome to Vicipaedia Arcanum!
+  </h1>
+  <p>Vicipaedia Arcanum (from now on referred to as VA) is an encyclopedia for tabletop RPG games. With VA, you and your party can track creatures 
+    and NPCs (planned feature) you have encountered during your travels.</p>
+  <p>To get started, first <a href="{{ url_for('auth_register') }} ">create an account</a>. Then you can either create a new campaign or
+  join an existing one.</p>
+  <p>You can check the source code <a href="https://github.com/tire95/Vicipaedia-Arcanum" target="_blank">here</a>.</p>
 {% endblock %}
