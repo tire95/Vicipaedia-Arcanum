@@ -1,24 +1,32 @@
 {% extends "layout2.html" %}
 
 {% block body %}
-<table>
-    <tr>
-        <th>Name</th>
-        <th></th>
-    </tr>
-    {% for creature in creatures %}
-    <tr>
-        <td>{{ creature.name }}</td>
-        <td>
-            <form method="GET" action="{{ url_for('open_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
-                <input type="submit" value="Open creature"/>
-            </form>
-        </td>
-    </tr>
-    {% else %}
-    <tr></tr>
-        <td>It's strangely empty. Perhaps you should add a creature here.</td>
-        <td></td>
-    {% endfor %}
-</table>
+<script src="/static/filter.js"></script> 
+<div class="container">
+    <input class="form-control mb-4" id="tableSearch" type="text" onkeyup="myFunction()"
+      placeholder="Type something to search list items">
+  
+    <table id="myTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for creature in creatures %}
+            <tr>
+                <td>{{ creature.name }}</td>
+                <td>{{ creature.type }}</td>
+                <td>
+                    <form method="GET" action="{{ url_for('open_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
+                        <input type="submit" value="Open creature"/>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}  
+        </tbody>
+    </table>
+</div>
 {% endblock %}

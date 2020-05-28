@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<p>Joined campaigns: </p>
+<script src="/static/filter.js"></script>
+<p>You have joined {{ number_of_joined_campaigns }} campaigns</p>
 {% for campaign in joined_campaigns %}
 <a href="{{ url_for('campaigns_register', campaign_id=campaign.id) }}">{{ campaign.name }}</a>
 <p></p>
@@ -9,24 +10,33 @@
 <p>Looks like you've not joined any campaign. Join a campaign below.</p>
 {% endfor %}
 
-<p>All campaigns:</p>
+<p>Other campaigns:</p>
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Game system</th>
-        <th></th>
-    </tr>
-    {% for campaign in campaigns %}
-    <tr>
-        <td>{{ campaign.name }}</td>
-        <td>{{ campaign.game_system}}</td>
-        <td>
-            <form method="GET" action="{{ url_for('campaigns_register', campaign_id=campaign.id) }}">
-                <input type="submit" value="Join campaign"/>
-            </form>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+<div class="container">
+    <input class="form-control mb-4" id="tableSearch" type="text" onkeyup="myFunction()"
+      placeholder="Type something to search list items">
+  
+    <table id="myTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Game system</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for campaign in not_joined_campaigns %}
+            <tr>
+                <td>{{ campaign.name }}</td>
+                <td>{{ campaign.game_system }}</td>
+                <td>
+                    <form method="GET" action="{{ url_for('campaigns_register', campaign_id=campaign.id) }}">
+                        <input type="submit" value="Join campaign"/>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}  
+        </tbody>
+    </table>
+</div>
 {% endblock %}

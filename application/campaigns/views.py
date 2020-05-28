@@ -5,6 +5,7 @@ from application.campaigns.models import Campaign
 from application.campaigns.models import check_account
 from application.campaigns.forms import CampaignForm, RegisterForm
 from flask_login import login_required, current_user
+from application.auth.models import Account
 
 
 @app.route("/campaigns/new", methods = ["GET", "POST"])
@@ -16,6 +17,10 @@ def campaigns_create():
     form = CampaignForm(request.form)
     if not form.validate():
         return render_template("campaigns/new.html", form = form)
+
+    if db.session.query(Campaign).filter_by(name=form.name.data).first():
+        return render_template("campaigns/new.html", form = form,
+                                error = "A campaign with such a name already exists")
 
     campaign_to_add = Campaign(form.name.data, form.game_system.data, form.password.data)
     campaign_to_add.accounts.append(current_user)
@@ -29,7 +34,9 @@ def campaigns_create():
 @app.route("/campaigns", methods=["GET"])
 @login_required
 def campaigns_index():
-    return render_template("campaigns/list.html", campaigns=db.session.query(Campaign).all(), joined_campaigns=db.session.query(Campaign).filter(Campaign.accounts.contains(current_user)))
+    return render_template("campaigns/list.html", joined_campaigns=db.session.query(Campaign).filter(Campaign.accounts.contains(current_user)),
+        not_joined_campaigns=db.session.query(Campaign).filter(~Campaign.accounts.contains(current_user)), 
+        number_of_joined_campaigns=Account.number_of_joined_campaigns(current_user.id))
 
 
 @app.route("/campaigns/register/<campaign_id>", methods=["GET", "POST"])

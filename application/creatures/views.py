@@ -3,14 +3,16 @@ from flask import redirect, render_template, request, url_for
 from flask_login import login_required, current_user
 from application.creatures.models import Creature
 from application.creatures.forms import CreatureForm, ModifyForm
-from application.campaigns.models import check_account
+from application.campaigns.models import Campaign, check_account
+
 
 
 @app.route("/campaigns/<campaign_id>/creatures", methods=["GET"])
 @login_required
 def creatures_index(campaign_id):
     if check_account(campaign_id, current_user):
-        return render_template("creatures/list.html", creatures=db.session.query(Creature).filter_by(campaign_id=campaign_id).all(), campaign_id=campaign_id)
+        return render_template("creatures/list.html", creatures=db.session.query(Creature).filter_by(campaign_id=campaign_id).all(),
+         campaign_id=campaign_id)
     return render_template("index.html")
 
 
@@ -40,8 +42,7 @@ def creatures_create(campaign_id):
 
         form = CreatureForm(request.form)
 
-        creature = db.session.query(Creature).filter_by(name=form.name.data, campaign_id=campaign_id).first()
-        if creature:
+        if db.session.query(Creature).filter_by(name=form.name.data, campaign_id=campaign_id).first():
             return render_template("creatures/new.html", form = form,
                                 error = "A creature with such a name already exists", campaign_id=campaign_id)
 
