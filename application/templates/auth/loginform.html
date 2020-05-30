@@ -6,6 +6,7 @@
             <div class="col-md-6 login-form-1">
                   <h3>Login</h3>
                   <form method="POST" action="{{ url_for('auth_login') }}">
+                        {{ form.csrf_token }}
                         <div class="form-group">
                               {{ form.name(class_="form-control") }}
                         </div>
@@ -20,6 +21,7 @@
                         </div>
                         <div class="error-group">
                               {{ error }}
+                              {{ form.error }}
                         </div>
                   </form>
             </div>
@@ -29,6 +31,7 @@
                   </div>
                   <h3>Register</h3>
                   <form method="POST" action="{{ url_for('auth_register') }}">
+                        {{ register_form.csrf_token }}
                         <div class="form-group">
                               {{ register_form.register_name(class_="form-control") }}
                         </div>
@@ -39,10 +42,11 @@
                               </small>
                         </div>
                         <div class="form-group">
-                              <input type="submit" class="btnSubmit" value="Login" />
+                              <input type="submit" class="btnSubmit" value="Register" />
                         </div>
                         <div class="error-group">
                               {{ register_error }}
+                              {{ register_form.error }}
                         </div>
                   </form>
             </div>

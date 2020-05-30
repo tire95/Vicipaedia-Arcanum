@@ -5,56 +5,20 @@
 
 <p>Modify creature: {{ creature.name }}</p>
 <form method="POST" action="{{ url_for('modify_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
-    <table>
-        <tr>
-            <td>
-                {{ form.type.label }}
-            </td>
-            <td>
-                {{ form.type }}
-            </td>
-            <td>
-                <ul>
-                  {% for error in form.type.errors %}
-                  <li>{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-        </tr>
-        <tr>
-            <td>
-                {{ form.size.label }}
-            </td>
-            <td>
-                {{ form.size }}
-            </td>
-            <td>
-                <ul>
-                  {% for error in form.size.errors %}
-                  <li>{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-        </tr>
-        <tr>
-            <td>
-                {{ form.description.label }}
-            </td>
-            <td>
-                {{ form.description }}
-            </td>
-            <td>
-                <ul>
-                  {% for error in form.description.errors %}
-                  <li>{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="submit" value="Modify the creature"/>
-            </td>
-        </tr>
+    <div class="form-group">
+        {{ form.type(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.size(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.description(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btnSubmit" value="Modify creature" />
+    </div>
+    <div class="error-group">
+        {{ error }}
+    </div>
 </form>
 {% endblock %}

@@ -9,9 +9,9 @@ from application.auth.forms import LoginForm, RegisterForm
 def auth_login():
     if request.method == "GET":
         return render_template("auth/loginform.html", form = LoginForm(), register_form = RegisterForm())
-
-    form = LoginForm(request.form)
-    if form.validate():
+        
+    form = LoginForm()
+    if form.validate_on_submit():
         user = db.session.query(Account).filter_by(name=form.name.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
@@ -28,21 +28,19 @@ def auth_logout():
 
 @app.route("/auth/register", methods=["GET", "POST"])
 def auth_register():
-    if request.method == "GET":
-        return render_template("auth/loginform.html", form = LoginForm(), register_form = RegisterForm())
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user = db.session.query(Account).filter_by(name=form.register_name.data).first()
+        if user:
+            return render_template("auth/loginform.html", form = LoginForm(), register_form = form, error = "Account name is already taken")
 
-    form = RegisterForm(request.form)
-    if not form.validate():
+        account_to_add = Account(form.register_name.data, form.register_password.data)
+        db.session().add(account_to_add)
+        db.session().commit()
+
+        return redirect(url_for("auth_login"))
+    else:
         return render_template("auth/loginform.html", form = LoginForm(), register_form = form)
 
-    user = db.session.query(Account).filter_by(name=form.register_name.data).first()
-    if user:
-        return render_template("auth/loginform.html", form = LoginForm(), register_form = form,
-                               register_error = "Account name is already taken")
 
-    account_to_add = Account(form.register_name.data, form.register_password.data)
-    db.session().add(account_to_add)
-    db.session().commit()
-
-    return redirect(url_for("auth_login"))
 

@@ -1,88 +1,28 @@
 {% extends "layout2.html" %}
 {% block body %}
 <a class="nav-link" href="{{ url_for('npcs_index', campaign_id=campaign_id) }}">Back to list</a>
-{{ error }}
+
 <form method="POST" action="{{ url_for('npcs_create', campaign_id=campaign_id) }}">
-    <table>
-        <tr>
-            <td>
-                {{ form.name.label }}
-            </td>
-            <td>
-                {{ form.name }}
-            </td>
-            <td>
-                <ul>
-                  {% for error in form.name.errors %}
-                  <li>{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-        </tr>
-        <tr>
-            <td>
-                {{ form.race.label }}
-            </td>
-            <td>
-                {{ form.race }}
-            </td>
-            <td>
-                <ul>
-                  {% for error in form.race.errors %}
-                  <li>{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-        </tr>
-        <tr>
-            <td>
-                {{ form.location.label }}
-            </td>
-            <td>
-                {{ form.location }}
-            </td>
-            <td>
-                <ul>
-                  {% for error in form.location.errors %}
-                  <li>{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-        </tr>
-        <tr>
-            <td>
-                {{ form.occupation.label }}
-            </td>
-            <td>
-                {{ form.occupation }}
-            </td>
-            <td>
-                <ul>
-                  {% for error in form.occupation.errors %}
-                  <li>{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-        </tr>
-        <tr>
-            <td>
-                {{ form.description.label }}
-            </td>
-            <td>
-                {{ form.description }}
-            </td>
-            <td>
-                <ul>
-                  {% for error in form.description.errors %}
-                  <li>{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="submit" value="Add a new NPC"/>
-            </td>
-        </tr>
+    <div class="error-group">
+        {{ error }}
+    </div>
+    <div class="form-group">
+        {{ form.name(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.race(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.location(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.occupation(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.description(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btnSubmit" value="Add a new NPC" />
+    </div>
 </form>
 {% endblock %}
