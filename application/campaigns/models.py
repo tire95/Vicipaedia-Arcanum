@@ -1,5 +1,7 @@
 from application import db, bcrypt
 from application.models import NameBase
+from sqlalchemy.sql import text
+
 
 # Association table between accounts and campaigns
 association_table = db.Table('association',
@@ -19,6 +21,16 @@ class Campaign(NameBase):
         self.game_system = game_system
         if password:
             self.password = bcrypt.generate_password_hash(password).decode("utf8")
+
+    @staticmethod
+    def number_of_creatures(campaign_id):
+        stmt = text("SELECT COUNT(creature.id) FROM Creature WHERE creature.campaign_id = :campaign_id").params(campaign_id=campaign_id)
+        return db.engine.execute(stmt).scalar()
+
+    @staticmethod
+    def number_of_npcs(campaign_id):
+        stmt = text("SELECT COUNT(npc.id) FROM NPC WHERE npc.campaign_id = :campaign_id").params(campaign_id=campaign_id)
+        return db.engine.execute(stmt).scalar()
 
 
 # Function for checking whether a certain user is already registered to a campaign 

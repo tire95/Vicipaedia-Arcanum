@@ -49,7 +49,7 @@ def creatures_create(campaign_id):
         if not form.validate():
             return render_template("creatures/new.html", form = form, campaign_id=campaign_id)
 
-        creature_to_add = Creature(form.name.data, form.type.data, form.size.data, form.notes.data, campaign_id)
+        creature_to_add = Creature(form.name.data, form.type.data, form.size.data, form.description.data, campaign_id)
 
         db.session().add(creature_to_add)
         db.session().commit()
@@ -79,7 +79,7 @@ def modify_creature(creature_id, campaign_id):
         if request.method == "GET":
             form.type.data = creature.type
             form.size.data = creature.size
-            form.notes.data = creature.notes
+            form.description.data = creature.description
             return render_template("creatures/modify.html", creature_id = creature_id, form = form, creature = creature,campaign_id=campaign_id)
 
         if not form.validate():
@@ -87,7 +87,7 @@ def modify_creature(creature_id, campaign_id):
 
         creature.type = form.type.data
         creature.size = form.size.data
-        creature.notes = form.notes.data
+        creature.description = form.description.data
 
         db.session.commit()
 

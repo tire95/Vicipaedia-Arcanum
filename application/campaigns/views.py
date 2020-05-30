@@ -1,8 +1,7 @@
 from flask import render_template, request, redirect, url_for
 
 from application import app, db, bcrypt
-from application.campaigns.models import Campaign
-from application.campaigns.models import check_account
+from application.campaigns.models import Campaign, check_account
 from application.campaigns.forms import CampaignForm, RegisterForm
 from flask_login import login_required, current_user
 from application.auth.models import Account
@@ -45,7 +44,7 @@ def campaigns_register(campaign_id):
 
     # If the user has already registered to the campaign, just direct them straight to the campaign's page
     if check_account(campaign_id, current_user):
-        return redirect(url_for("creatures_index", campaign_id=campaign_id))
+        return redirect(url_for("campaign_view", campaign_id = campaign_id))
 
     campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
     form = RegisterForm(request.form)
@@ -54,12 +53,19 @@ def campaigns_register(campaign_id):
     if not campaign.password or (form.validate() and bcrypt.check_password_hash(campaign.password, form.password.data)):
         campaign.accounts.append(current_user)
         db.session.commit()
-        return redirect(url_for("creatures_index", campaign_id=campaign_id))
+        return redirect(url_for("campaign_view", campaign_id = campaign_id))
 
     if request.method == "GET":
         return render_template("campaigns/register.html", form = RegisterForm(), campaign_id=campaign_id)
 
     return render_template("campaigns/register.html", form = form, campaign_id = campaign_id, error = "Wrong password")
+
+
+@app.route("/campaigns/view/<campaign_id>/", methods=["GET"])
+@login_required
+def campaign_view(campaign_id):
+    return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
+    campaign_id = campaign_id)
 
 
 

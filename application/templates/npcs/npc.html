@@ -1,0 +1,26 @@
+{% extends "layout2.html" %}
+
+{% block body %}
+<table style="width: 100%">
+    <tr>
+        <td>Name: {{ npc.name }}</td>
+    </tr>
+    <tr>
+        <td>Race: {{ npc.race }}</td>
+    </tr>
+    <tr>
+        <td>Location: {{ npc.location }}</td>
+    </tr>
+    <tr>
+        <td>Occupation: {{ npc.occupation }}</td>
+    </tr>
+</table>
+<p>Description: {{ npc.description }}</p>
+<form method="GET" action="{{ url_for('modify_npc', npc_id=npc.id, campaign_id=campaign_id) }}">
+    <input type="submit" value="Modify NPC"/>
+</form>
+<form method="POST" action="{{ url_for('remove_npc', npc_id=npc.id, campaign_id=campaign_id) }}">
+    <input type="submit" value="Remove NPC"/>
+</form>
+
+{% endblock %}

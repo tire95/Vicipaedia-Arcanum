@@ -20,6 +20,8 @@ from application.creatures import views
 from application.creatures import models
 from application.campaigns import models
 from application.campaigns import views
+from application.npcs import models
+from application.npcs import views
 
 from application.auth import models
 from application.auth import views

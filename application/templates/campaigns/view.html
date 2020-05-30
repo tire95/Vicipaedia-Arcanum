@@ -1,0 +1,26 @@
+{% extends "layout2.html" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-6 mb-4">
+      <div class="card h-100">
+        <a href="{{ url_for('creatures_index', campaign_id=campaign_id) }}"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+        <div class="card-body">
+          <h4 class="card-title">
+            <p class="card-text">Creatures: {{ number_of_creatures }}</a>
+          </h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 mb-4">
+      <div class="card h-100">
+        <a href="{{ url_for('npcs_index', campaign_id=campaign_id) }}"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+        <div class="card-body">
+          <h4 class="card-title">
+            <p>NPCs: {{ number_of_npcs }}</p>
+          </h4>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

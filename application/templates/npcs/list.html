@@ -3,8 +3,7 @@
 {% block body %}
 <script src="/static/filter.js"></script> 
 <div class="container">
-    <a class="nav-link" href="{{ url_for('creatures_form', campaign_id=campaign_id) }}">Add a creature</a>
-
+    <a class="nav-link" href="{{ url_for('npcs_form', campaign_id=campaign_id) }}">Add an NPC</a>
     <input class="form-control mb-4" id="tableSearch" type="text" onkeyup="myFunction()"
       placeholder="Type something to search list items">
   
@@ -12,18 +11,18 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Type</th>
+                <th>Location</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for creature in creatures %}
+            {% for npc in npcs %}
             <tr>
-                <td>{{ creature.name }}</td>
-                <td>{{ creature.type }}</td>
+                <td>{{ npc.name }}</td>
+                <td>{{ npc.location }}</td>
                 <td>
-                    <form method="GET" action="{{ url_for('open_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
-                        <input type="submit" value="Open creature"/>
+                    <form method="GET" action="{{ url_for('open_npc', npc_id=npc.id, campaign_id=campaign_id) }}">
+                        <input type="submit" value="Open NPC"/>
                     </form>
                 </td>
             </tr>
