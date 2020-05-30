@@ -18,7 +18,7 @@ def campaigns_create():
     if not form.validate():
         return render_template("campaigns/new.html", form = form)
 
-    if db.session.query(Campaign).filter_by(name=form.name.data).first():
+    if db.session.query(Campaign).filter(Campaign.name.ilike(form.name.data)).first():
         return render_template("campaigns/new.html", form = form,
                                 error = "A campaign with such a name already exists")
 

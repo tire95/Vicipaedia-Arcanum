@@ -1,44 +1,51 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<p>Log in below</p>
-{{ error }}
-<form method="POST" action="{{ url_for('auth_login') }}">
-  <table>
-    <tr>
-      <td>
-	{{ form.name.label }}
-      </td>
-      <td>
-	{{ form.name }}
-      </td>
-      <td>
-            <ul>
-              {% for error in form.name.errors %}
-              <li>{{ error }}</li>
-              {% endfor %}
-            </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>
-	{{ form.password.label }}
-      </td>
-      <td>
-	{{ form.password }}
-      </td>
-      <td>
-            <ul>
-              {% for error in form.password.errors %}
-              <li>{{ error }}</li>
-              {% endfor %}
-            </ul>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-	<input type="submit" value="Login"/>
-      </td>
-    </tr>
-</form>
+<div class="container login-container">
+      <div class="row">
+            <div class="col-md-6 login-form-1">
+                  <h3>Login</h3>
+                  <form method="POST" action="{{ url_for('auth_login') }}">
+                        <div class="form-group">
+                              {{ form.name(class_="form-control") }}
+                        </div>
+                        <div class="form-group">
+                              {{ form.password(class_="form-control") }}
+                        </div>
+                        <div class="form-group">
+                              <input type="submit" class="btnSubmit" value="Login" />
+                        </div>
+                        <div class="form-group">
+                              <a href="#" class="btnForgetPwd">Forget Password?</a>
+                        </div>
+                        <div class="error-group">
+                              {{ error }}
+                        </div>
+                  </form>
+            </div>
+            <div class="col-md-6 login-form-2">
+                  <div class="login-logo">
+                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+                  </div>
+                  <h3>Register</h3>
+                  <form method="POST" action="{{ url_for('auth_register') }}">
+                        <div class="form-group">
+                              {{ register_form.register_name(class_="form-control") }}
+                        </div>
+                        <div class="form-group">
+                              {{ register_form.register_password(class_="form-control") }}
+                              <small id="passwordHelpBlock" class="form-text">
+                                    Your password must be at least 8 characters long
+                              </small>
+                        </div>
+                        <div class="form-group">
+                              <input type="submit" class="btnSubmit" value="Login" />
+                        </div>
+                        <div class="error-group">
+                              {{ register_error }}
+                        </div>
+                  </form>
+            </div>
+      </div>
+</div>
 {% endblock %}

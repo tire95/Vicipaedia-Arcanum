@@ -42,7 +42,7 @@ def creatures_create(campaign_id):
 
         form = CreatureForm(request.form)
 
-        if db.session.query(Creature).filter_by(name=form.name.data, campaign_id=campaign_id).first():
+        if db.session.query(Creature).filter(Creature.name.ilike(form.name.data)).filter(Creature.campaign_id==campaign_id).first():
             return render_template("creatures/new.html", form = form,
                                 error = "A creature with such a name already exists", campaign_id=campaign_id)
 
