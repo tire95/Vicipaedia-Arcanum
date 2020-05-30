@@ -2,7 +2,7 @@ from application import db
 from application.models import NameBase
 
 
-class NPC(NameBase):
+class Npc(NameBase):
     race = db.Column(db.String(144), nullable=False)
     location = db.Column(db.String(144), nullable=False)
     occupation = db.Column(db.String(144), nullable=False)

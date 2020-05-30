@@ -1,8 +1,8 @@
 from application import app, db
 from flask import redirect, render_template, request, url_for
 from flask_login import login_required, current_user
-from application.npcs.models import NPC
-from application.npcs.forms import NPCForm, ModifyForm
+from application.npcs.models import Npc
+from application.npcs.forms import NpcForm, ModifyForm
 from application.campaigns.models import Campaign, check_account
 
 
@@ -11,7 +11,7 @@ from application.campaigns.models import Campaign, check_account
 @login_required
 def npcs_index(campaign_id):
     if check_account(campaign_id, current_user):
-        return render_template("npcs/list.html", npcs=db.session.query(NPC).filter_by(campaign_id=campaign_id).all(),
+        return render_template("npcs/list.html", npcs=db.session.query(Npc).filter_by(campaign_id=campaign_id).all(),
          campaign_id=campaign_id)
     return render_template("index.html")
 
@@ -20,7 +20,7 @@ def npcs_index(campaign_id):
 @login_required
 def npcs_form(campaign_id):
     if check_account(campaign_id, current_user):
-        return render_template("npcs/new.html", form = NPCForm(), campaign_id=campaign_id)
+        return render_template("npcs/new.html", form = NpcForm(), campaign_id=campaign_id)
     return render_template("index.html")
 
 
@@ -28,7 +28,7 @@ def npcs_form(campaign_id):
 @login_required
 def remove_npc(npc_id, campaign_id):
     if check_account(campaign_id, current_user):
-        db.session.query(NPC).filter_by(id=npc_id).delete()
+        db.session.query(Npc).filter_by(id=npc_id).delete()
         db.session().commit()
         return redirect(url_for("npcs_index", campaign_id=campaign_id))
     return render_template("index.html")
@@ -40,16 +40,16 @@ def remove_npc(npc_id, campaign_id):
 def npcs_create(campaign_id):
     if check_account(campaign_id, current_user):
         
-        form = NPCForm(request.form)
+        form = NpcForm(request.form)
 
-        if db.session.query(NPC).filter(NPC.name.ilike(form.name.data)).filter(NPC.campaign_id==campaign_id).first():
+        if db.session.query(Npc).filter(Npc.name.ilike(form.name.data)).filter(Npc.campaign_id==campaign_id).first():
             return render_template("npcs/new.html", form = form,
                                 error = "An NPC with such a name already exists", campaign_id=campaign_id)
 
         if not form.validate():
             return render_template("npcs/new.html", form = form, campaign_id=campaign_id)
 
-        npc_to_add = NPC(form.name.data, form.race.data, form.location.data, form.occupation.data, form.description.data, campaign_id)
+        npc_to_add = Npc(form.name.data, form.race.data, form.location.data, form.occupation.data, form.description.data, campaign_id)
 
         db.session().add(npc_to_add)
         db.session().commit()
@@ -64,7 +64,7 @@ def npcs_create(campaign_id):
 @login_required
 def open_npc(npc_id, campaign_id):
     if check_account(campaign_id, current_user):
-        return render_template("npcs/npc.html", npc=db.session.query(NPC).get(npc_id), campaign_id=campaign_id)
+        return render_template("npcs/npc.html", npc=db.session.query(Npc).get(npc_id), campaign_id=campaign_id)
     return render_template("index.html")
 
 
@@ -73,7 +73,7 @@ def open_npc(npc_id, campaign_id):
 def modify_npc(npc_id, campaign_id):
     if check_account(campaign_id, current_user):
 
-        npc = db.session.query(NPC).get(npc_id)
+        npc = db.session.query(Npc).get(npc_id)
         form = ModifyForm(request.form)
 
         if request.method == "GET":

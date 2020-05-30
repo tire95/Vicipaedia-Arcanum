@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, validators
  
-class NPCForm(FlaskForm):
+class NpcForm(FlaskForm):
     name = StringField("NPC's name", [validators.InputRequired(), validators.Length(min=2, max=144)])
     race = StringField("NPC's race", [validators.InputRequired(), validators.Length(min=2, max=144)])
     location = StringField("NPC's location", [validators.InputRequired(), validators.Length(min=2, max=144)])

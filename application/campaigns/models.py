@@ -29,7 +29,7 @@ class Campaign(NameBase):
 
     @staticmethod
     def number_of_npcs(campaign_id):
-        stmt = text("SELECT COUNT(NPC.id) FROM NPC WHERE NPC.campaign_id = :campaign_id").params(campaign_id=campaign_id)
+        stmt = text("SELECT COUNT(Npc.id) FROM Npc WHERE Npc.campaign_id = :campaign_id").params(campaign_id=campaign_id)
         return db.engine.execute(stmt).scalar()
 
 
