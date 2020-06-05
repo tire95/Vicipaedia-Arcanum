@@ -4,7 +4,7 @@
 <script src="/static/filter.js"></script>
 <p>You have joined {{ number_of_joined_campaigns }} campaigns</p>
 {% for campaign in joined_campaigns %}
-<a href="{{ url_for('campaigns_register', campaign_id=campaign.id) }}">{{ campaign.name }}</a>
+<a href="{{ url_for('campaigns_view', campaign_id=campaign.id) }}">{{ campaign.name }}</a>
 <p></p>
 {% else %}
 <p>Looks like you've not joined any campaign. Join a campaign below.</p>
@@ -16,7 +16,7 @@
     <input class="form-control mb-4" id="tableSearch" type="text" onkeyup="myFunction()"
       placeholder="Type something to search list items">
   
-    <table id="myTable" class="table table-bordered table-striped">
+    <table id="myTable" class="table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -30,7 +30,7 @@
                 <td>{{ campaign.name }}</td>
                 <td>{{ campaign.game_system }}</td>
                 <td>
-                    <form method="GET" action="{{ url_for('campaigns_register', campaign_id=campaign.id) }}">
+                    <form method="GET" action="{{ url_for('campaigns_view', campaign_id=campaign.id) }}">
                         <input type="submit" value="Join campaign"/>
                     </form>
                 </td>

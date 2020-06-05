@@ -13,7 +13,7 @@ def npcs_index(campaign_id):
     if check_account(campaign_id, current_user):
         return render_template("npcs/list.html", npcs=db.session.query(Npc).filter_by(campaign_id=campaign_id).all(),
          campaign_id=campaign_id)
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
 
 @app.route("/campaigns/<campaign_id>/npcs/new/")
@@ -21,7 +21,7 @@ def npcs_index(campaign_id):
 def npcs_form(campaign_id):
     if check_account(campaign_id, current_user):
         return render_template("npcs/new.html", form = NpcForm(), campaign_id=campaign_id)
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
 
 @app.route("/campaigns/<campaign_id>/npcs/<npc_id>/remove/", methods=["POST"])
@@ -31,7 +31,7 @@ def remove_npc(npc_id, campaign_id):
         db.session.query(Npc).filter_by(id=npc_id).delete()
         db.session().commit()
         return redirect(url_for("npcs_index", campaign_id=campaign_id))
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
 
 
@@ -56,7 +56,7 @@ def npcs_create(campaign_id):
 
         return redirect(url_for("npcs_index", campaign_id=campaign_id))
 
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
 
 
@@ -65,7 +65,7 @@ def npcs_create(campaign_id):
 def open_npc(npc_id, campaign_id):
     if check_account(campaign_id, current_user):
         return render_template("npcs/npc.html", npc=db.session.query(Npc).get(npc_id), campaign_id=campaign_id)
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
 
 @app.route("/campaigns/<campaign_id>/npcs/<npc_id>/modify", methods=["GET", "POST"])
@@ -95,5 +95,5 @@ def modify_npc(npc_id, campaign_id):
 
         return redirect(url_for("open_npc", npc_id=npc_id, campaign_id=campaign_id))
 
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 

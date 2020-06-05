@@ -7,15 +7,27 @@
 <form method="POST" action="{{ url_for('creatures_create', campaign_id=campaign_id) }}">
     <div class="form-group">
         {{ form.name(class_="form-control") }}
+        <small id="helpBlock" class="form-text">
+            Minimun length: 2 characters. If unknown, enter "--"
+        </small>
     </div>
     <div class="form-group">
         {{ form.type(class_="form-control") }}
+        <small id="helpBlock" class="form-text">
+            Minimun length: 2 characters. If unknown, enter "--"
+        </small>
     </div>
     <div class="form-group">
         {{ form.size(class_="form-control") }}
+        <small id="helpBlock" class="form-text">
+            Minimun length: 2 characters. If unknown, enter "--"
+        </small>
     </div>
     <div class="form-group">
         {{ form.description(class_="form-control") }}
+        <small id="helpBlock" class="form-text">
+            Description is optional
+        </small>
     </div>
     <div class="form-group">
         <input type="submit" class="btnSubmit" value="Add a new creature" />

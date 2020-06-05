@@ -32,7 +32,7 @@ def auth_register():
     if form.validate_on_submit():
         user = db.session.query(Account).filter_by(name=form.register_name.data).first()
         if user:
-            return render_template("auth/loginform.html", form = LoginForm(), register_form = form, error = "Account name is already taken")
+            return render_template("auth/loginform.html", form = LoginForm(), register_form = form, register_error = "Account name is already taken")
 
         account_to_add = Account(form.register_name.data, form.register_password.data)
         db.session().add(account_to_add)
@@ -40,7 +40,7 @@ def auth_register():
 
         return redirect(url_for("auth_login"))
     else:
-        return render_template("auth/loginform.html", form = LoginForm(), register_form = form)
+        return render_template("auth/loginform.html", form = LoginForm(), register_form = form, register_error = "Either the account name or the password is too short")
 
 
 

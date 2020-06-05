@@ -13,7 +13,7 @@ def creatures_index(campaign_id):
     if check_account(campaign_id, current_user):
         return render_template("creatures/list.html", creatures=db.session.query(Creature).filter_by(campaign_id=campaign_id).all(),
          campaign_id=campaign_id)
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
 
 @app.route("/campaigns/<campaign_id>/creatures/new/")
@@ -21,7 +21,7 @@ def creatures_index(campaign_id):
 def creatures_form(campaign_id):
     if check_account(campaign_id, current_user):
         return render_template("creatures/new.html", form = CreatureForm(), campaign_id=campaign_id)
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
 
 @app.route("/campaigns/<campaign_id>/creatures/<creature_id>/remove/", methods=["POST"])
@@ -31,7 +31,7 @@ def remove_creature(creature_id, campaign_id):
         db.session.query(Creature).filter_by(id=creature_id).delete()
         db.session().commit()
         return redirect(url_for("creatures_index", campaign_id=campaign_id))
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
 
 
@@ -56,7 +56,7 @@ def creatures_create(campaign_id):
 
         return redirect(url_for("creatures_index", campaign_id=campaign_id))
 
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
 
 
@@ -65,7 +65,7 @@ def creatures_create(campaign_id):
 def open_creature(creature_id, campaign_id):
     if check_account(campaign_id, current_user):
         return render_template("creatures/creature.html", creature=db.session.query(Creature).get(creature_id), campaign_id=campaign_id)
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
 
 @app.route("/campaigns/<campaign_id>/creatures/<creature_id>/modify", methods=["GET", "POST"])
@@ -93,5 +93,5 @@ def modify_creature(creature_id, campaign_id):
 
         return redirect(url_for("open_creature", creature_id=creature_id, campaign_id=campaign_id))
 
-    return render_template("index.html")
+    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
