@@ -19,7 +19,7 @@
           <ul class="navbar-nav ml-auto">
             {% if current_user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('campaign_view', campaign_id=campaign_id) }} ">Campaign's front page</a>
+              <a class="nav-link" href="{{ url_for('campaigns_view', campaign_id=campaign_id) }} ">Campaign's front page</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('campaigns_index') }} ">List campaigns</a>
