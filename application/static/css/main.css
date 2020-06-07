@@ -1,5 +1,7 @@
 body {
     background-color: #ffffff;
+    font-family: "Open Sans";
+    font-size: 125%;
   }
 
 textarea {
@@ -37,7 +39,7 @@ textarea {
 }
 .login-form-2{
     padding: 9%;
-    background: #d1bdb9;
+    background: #cedfeb;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 .login-form-2 h3{
@@ -46,13 +48,14 @@ textarea {
     color: rgb(0, 0, 0);
 }
 .btnSubmit{
-    font-weight: 600;
-    width: 50%;
+    font-weight: 500;
+    width: 40%;
     color: #ffffff;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(19, 23, 46);
     border: none;
     border-radius: 1.5rem;
-    padding:2%;
+    padding:1%;
+    margin-bottom:1%
 }
 .btnForgetPwd{
     color: rgb(0, 0, 0);
@@ -65,11 +68,29 @@ textarea {
 }
 
 .error-group{
+    padding-left: 15px;
     text-align: center;
-    margin-bottom:12%;
+    margin-bottom:2%;
     color:rgb(196, 6, 6);
 }
 
 table#myTable{
     table-layout: fixed;
 }
+
+.card-title{
+    text-align: center;
+}
+
+.customLink{
+    color: black;
+}
+
+.customLink:hover{
+    color:black;
+}
+
+.span-custom{
+    width: 50%;
+}
+

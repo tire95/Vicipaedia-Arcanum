@@ -8,7 +8,7 @@
                   <form method="POST" action="{{ url_for('auth_login') }}">
                         {{ form.csrf_token }}
                         <div class="form-group">
-                              {{ form.name(class_="form-control") }}
+                              {{ form.name(autofocus=true,class_="form-control") }}
                         </div>
                         <div class="form-group">
                               {{ form.password(class_="form-control") }}
@@ -17,7 +17,7 @@
                               <input type="submit" class="btnSubmit" value="Login" />
                         </div>
                         <div class="form-group">
-                              <a href="#" class="btnForgetPwd">Forget Password?</a>
+                              <a href="https://lmgtfy.com/?q=How+to+remember+passwords&s=d&iie=1" target="_blank" class="btnForgetPwd">Forget Password?</a>
                         </div>
                         <div class="error-group">
                               {{ error }}
@@ -34,6 +34,9 @@
                         {{ register_form.csrf_token }}
                         <div class="form-group">
                               {{ register_form.register_name(class_="form-control") }}
+                              <small id="helpBlock" class="form-text">
+                                    Your account name must be at least 2 characters long
+                              </small>
                         </div>
                         <div class="form-group">
                               {{ register_form.register_password(class_="form-control") }}

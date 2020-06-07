@@ -2,30 +2,60 @@
 {% block body %}
 <h3>Create a campaign</h3>
 <form method="POST" action="{{ url_for('campaigns_create') }}">
-    <div class="form-group">
-        {{ form.name(class_="form-control") }}
-        <small id="nameHelpBlock" class="form-text">
-            Minimun length: 2 characters
-        </small>
+    <div class="row">
+        <div class="span-custom">
+            <div class="form-group">
+                {{ form.name(autofocus=true, class_="form-control") }}
+                <small id="helpBlock" class="form-text">
+                    Minimun length: 2 characters
+                </small>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="error-group">
+                {% for error in form.name.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+                <p>{{ error }}</p>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        {{ form.game_system(class_="form-control") }}
-        <small id="nameHelpBlock" class="form-text">
-            Minimun length: 2 characters
-        </small>
+    <div class="row">
+        <div class="span-custom">
+            <div class="form-group">
+                {{ form.game_system(class_="form-control") }}
+                <small id="nameHelpBlock" class="form-text">
+                    Minimun length: 2 characters
+                </small>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="error-group">
+                {% for error in form.game_system.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        {{ form.password(class_="form-control") }}
-        <small id="nameHelpBlock" class="form-text">
-            Password is optional; note that with no password, anyone can join this campaign
-        </small>
+    <div class="row">
+        <div class="span-custom">
+            <div class="form-group">
+                {{ form.password(class_="form-control") }}
+                <small id="helpBlock" class="form-text">
+                    Password is optional; note that with no password, anyone can join this campaign
+                </small>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="error-group">
+                {% for error in form.password.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <input type="submit" class="btnSubmit" value="Create a new campaign" />
     </div>
-    <div class="error-group">
-        {{ error }}
-    </div>
 </form>
-
 {% endblock %}

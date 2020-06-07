@@ -1,26 +1,19 @@
 {% extends "layout2.html" %}
 
 {% block body %}
-<div class="row">
-    <div class="col-lg-6 mb-4">
-      <div class="card h-100">
-        <a href="{{ url_for('creatures_index', campaign_id=campaign_id) }}"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="{{ url_for('creatures_index', campaign_id=campaign_id) }}"><p class="card-text">Creatures: {{ number_of_creatures }}</p></a>
-          </h4>
-        </div>
-      </div>
+
+<div class="card-group">
+  <div class="card mb-3 bg-light">
+    <a href="{{ url_for('creatures_index', campaign_id=campaign_id) }}"><img class="card-img-top" src="/static/images/Study of Dragons-cropped.jpg" alt=""></a>
+    <div class="card-body">
+      <a class="nav-link" href="{{ url_for('creatures_index', campaign_id=campaign_id) }}"><h5 class="card-title">Creatures: {{number_of_creatures}}</h5></a>
     </div>
-    <div class="col-lg-6 mb-4">
-      <div class="card h-100">
-        <a href="{{ url_for('npcs_index', campaign_id=campaign_id) }}"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="{{ url_for('npcs_index', campaign_id=campaign_id) }}"><p class="card-text">NPCs: {{ number_of_npcs }}</p></a>
-          </h4>
-        </div>
-      </div>
+  </div>
+  <div class="card mb-3 bg-light">
+    <a href="{{ url_for('npcs_index', campaign_id=campaign_id) }}"><img class="card-img-top" src="/static/images/The Little Executioner.jpg" alt=""></a>
+    <div class="card-body">
+      <a class="nav-link" href="{{ url_for('npcs_index', campaign_id=campaign_id) }}"><h5 class="card-title">NPCs: {{number_of_npcs}}</h5></a>
     </div>
+  </div>
 </div>
 {% endblock %}

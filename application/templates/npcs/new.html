@@ -3,38 +3,82 @@
 <a class="nav-link" href="{{ url_for('npcs_index', campaign_id=campaign_id) }}">Back to list</a>
 
 <form method="POST" action="{{ url_for('npcs_create', campaign_id=campaign_id) }}">
-    <div class="error-group">
-        {{ error }}
+    <div class="row">
+        <div class="span-custom">
+            <div class="form-group">
+                {{ form.name(autofocus=true, class_="form-control") }}
+                <small id="nameHelpBlock" class="form-text">
+                    Minimun length: 2 characters
+                </small>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="error-group">
+                {% for error in form.name.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+                <p>{{ error }}</p>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        {{ form.name(class_="form-control") }}
-        <small id="nameHelpBlock" class="form-text">
-            Minimun length: 2 characters
-        </small>
+    <div class="row">
+        <div class="span-custom">
+            <div class="form-group">
+                {{ form.race(class_="form-control") }}
+                <small id="helpBlock" class="form-text">
+                    Minimun length: 2 characters. If unknown, enter "--"
+                </small>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="error-group">
+                {% for error in form.race.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        {{ form.race(class_="form-control") }}
-        <small id="nameHelpBlock" class="form-text">
-            Minimun length: 2 characters. If unknown, enter "--"
-        </small>
+    <div class="row">
+        <div class="span-custom">
+            <div class="form-group">
+                {{ form.location(class_="form-control") }}
+                <small id="helpBlock" class="form-text">
+                    Minimun length: 2 characters. If unknown, enter "--"
+                </small>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="error-group">
+                {% for error in form.location.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        {{ form.location(class_="form-control") }}
-        <small id="nameHelpBlock" class="form-text">
-            Minimun length: 2 characters. If unknown, enter "--"
-        </small>
+    <div class="row">
+        <div class="span-custom">
+            <div class="form-group">
+                {{ form.occupation(class_="form-control") }}
+                <small id="nameHelpBlock" class="form-text">
+                    Minimun length: 2 characters. If unknown, enter "--"
+                </small>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="error-group">
+                {% for error in form.occupation.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        {{ form.occupation(class_="form-control") }}
-        <small id="nameHelpBlock" class="form-text">
-            Minimun length: 2 characters. If unknown, enter "--"
-        </small>
-    </div>
-    <div class="form-group">
-        {{ form.description(class_="form-control") }}
-        <small id="nameHelpBlock" class="form-text">
-            Description is optional
-        </small>
+    <div class="row">
+        <div class="form-group"  style="width: 100%;">
+            {{ form.description(class_="form-control") }}
+            <small id="helpBlock" class="form-text">
+                Description is optional
+            </small>
+        </div>
     </div>
     <div class="form-group">
         <input type="submit" class="btnSubmit" value="Add a new NPC" />

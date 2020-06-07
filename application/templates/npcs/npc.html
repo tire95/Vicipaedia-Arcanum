@@ -1,26 +1,41 @@
 {% extends "layout2.html" %}
 
 {% block body %}
-<table style="width: 100%">
-    <tr>
-        <td>Name: {{ npc.name }}</td>
-    </tr>
-    <tr>
-        <td>Race: {{ npc.race }}</td>
-    </tr>
-    <tr>
-        <td>Location: {{ npc.location }}</td>
-    </tr>
-    <tr>
-        <td>Occupation: {{ npc.occupation }}</td>
-    </tr>
+<a class="nav-link" href="{{ url_for('npcs_index', campaign_id=campaign_id) }}">Back to list</a>
+<table id="myTable" class="table">
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <td>{{ npc.name }}</td>
+        </tr>
+        <tr>
+            <th>Race</th>
+            <td>{{ npc.race }}</td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td>{{ npc.location }}</td>
+        </tr>
+        <tr>
+            <th>Occupation</th>
+            <td>{{ npc.occupation }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ npc.description }}</td>
+        </tr>
+    </tbody>
 </table>
-<p>Description: {{ npc.description }}</p>
-<form method="GET" action="{{ url_for('modify_npc', npc_id=npc.id, campaign_id=campaign_id) }}">
-    <input type="submit" value="Modify NPC"/>
-</form>
-<form method="POST" action="{{ url_for('remove_npc', npc_id=npc.id, campaign_id=campaign_id) }}">
-    <input type="submit" value="Remove NPC"/>
-</form>
+<div class="span-custom">
+    <form method="GET" action="{{ url_for('modify_npc', npc_id=npc.id, campaign_id=campaign_id) }}">
+        <input type="submit" class="btnSubmit" value="Modify NPC"/>
+    </form>
+</div>
+<div class="span-custom">
+    <form method="POST" action="{{ url_for('remove_npc', npc_id=npc.id, campaign_id=campaign_id) }}">
+        <input type="submit" class="btnSubmit" value="Remove NPC"/>
+    </form>
+</div>
+
 
 {% endblock %}

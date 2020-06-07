@@ -4,7 +4,7 @@
 <script src="/static/filter.js"></script>
 <p>You have joined {{ number_of_joined_campaigns }} campaigns</p>
 {% for campaign in joined_campaigns %}
-<a href="{{ url_for('campaigns_view', campaign_id=campaign.id) }}">{{ campaign.name }}</a>
+<a class="nav-link" href="{{ url_for('campaigns_view', campaign_id=campaign.id) }}">{{ campaign.name }}</a>
 <p></p>
 {% else %}
 <p>Looks like you've not joined any campaign. Join a campaign below.</p>
@@ -31,7 +31,7 @@
                 <td>{{ campaign.game_system }}</td>
                 <td>
                     <form method="GET" action="{{ url_for('campaigns_view', campaign_id=campaign.id) }}">
-                        <input type="submit" value="Join campaign"/>
+                        <input type="submit" class="btnSubmit" value="Join campaign"/>
                     </form>
                 </td>
             </tr>

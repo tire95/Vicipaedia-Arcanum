@@ -14,12 +14,13 @@ def campaigns_create():
         return render_template("campaigns/new.html", form = CampaignForm())
 
     form = CampaignForm(request.form)
-    if not form.validate():
-        return render_template("campaigns/new.html", form = form)
 
     if db.session.query(Campaign).filter(Campaign.name.ilike(form.name.data)).first():
         return render_template("campaigns/new.html", form = form,
                                 error = "A campaign with such a name already exists")
+
+    if not form.validate():
+        return render_template("campaigns/new.html", form = form)
 
     campaign_to_add = Campaign(form.name.data, form.game_system.data, form.password.data)
     campaign_to_add.accounts.append(current_user)

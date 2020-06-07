@@ -22,7 +22,7 @@
                 <td>{{ npc.location }}</td>
                 <td>
                     <form method="GET" action="{{ url_for('open_npc', npc_id=npc.id, campaign_id=campaign_id) }}">
-                        <input type="submit" value="Open NPC"/>
+                        <input type="submit" class="btnSubmit" value="Open NPC"/>
                     </form>
                 </td>
             </tr>

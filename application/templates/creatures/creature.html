@@ -1,23 +1,36 @@
 {% extends "layout2.html" %}
 
 {% block body %}
-<table style="width: 100%">
-    <tr>
-        <td>Name: {{ creature.name }}</td>
-    </tr>
-    <tr>
-        <td>Type: {{ creature.type }}</td>
-    </tr>
-    <tr>
-        <td>Size: {{ creature.size}}</td>
-    </tr>
+<a class="nav-link" href="{{ url_for('creatures_index', campaign_id=campaign_id) }}">Back to list</a>
+<table id="myTable" class="table">
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <td>{{ creature.name }}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{ creature.type }}</td>
+        </tr>
+        <tr>
+            <th>Size</th>
+            <td>{{ creature.size }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ creature.description }}</td>
+        </tr>
+    </tbody>
 </table>
-<p>Description: {{ creature.description }}</p>
-<form method="GET" action="{{ url_for('modify_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
-    <input type="submit" value="Modify creature"/>
-</form>
-<form method="POST" action="{{ url_for('remove_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
-    <input type="submit" value="Remove creature"/>
-</form>
+<div class="span-custom">
+    <form method="GET" action="{{ url_for('modify_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
+        <input type="submit" class="btnSubmit" value="Modify creature"/>
+    </form>
+</div>
+<div class="span-custom">
+    <form method="POST" action="{{ url_for('remove_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
+        <input type="submit" class="btnSubmit" value="Remove creature"/>
+    </form>
+</div>
 
 {% endblock %}

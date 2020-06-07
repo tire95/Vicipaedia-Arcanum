@@ -23,7 +23,7 @@
                 <td>{{ creature.type }}</td>
                 <td>
                     <form method="GET" action="{{ url_for('open_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
-                        <input type="submit" value="Open creature"/>
+                        <input type="submit" class="btnSubmit" value="Open creature"/>
                     </form>
                 </td>
             </tr>
