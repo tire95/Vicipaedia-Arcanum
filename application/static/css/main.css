@@ -49,21 +49,20 @@ textarea {
 .btnSubmit{
     font-weight: 500;
     width: 60%;
-    color: #ffffff;
+    color: rgb(255, 255, 255);
     background-color: rgb(19, 23, 46);
     border: none;
     border-radius: 1.5rem;
     padding:2%;
     margin-bottom:1%
 }
-.btnForgetPwd{
-    color: rgb(0, 0, 0);
+.customLink{
     font-weight: 600;
-    text-decoration: none;
+    color: #0055df;
 }
-.btnForgetPwd:hover{
+.customLink:hover{
     text-decoration:none;
-    color:rgb(0, 0, 0);
+    color: #002e79;
 }
 
 .error-group{
@@ -80,14 +79,6 @@ table#myTable{
 .card-title{
     text-align: center;
     color: black;
-}
-
-.customLink{
-    color: black;
-}
-
-.customLink:hover{
-    color:black;
 }
 
 .span-custom{

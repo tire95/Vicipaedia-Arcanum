@@ -12,13 +12,13 @@
   <div class="card mb-3 bg-light text-center">
     <a href="{{ url_for('creatures_index', campaign_id=campaign_id) }}"><img class="card-img-top" src="/static/images/Studies of Dragons-cropped.jpg" alt="Creatures"></a>
     <div class="card-body">
-      <a href="{{ url_for('creatures_index', campaign_id=campaign_id) }}">Creatures: {{number_of_creatures}}</a>
+      <a href="{{ url_for('creatures_index', campaign_id=campaign_id) }}" class="customLink">Creatures: {{number_of_creatures}}</a>
     </div>
   </div>
   <div class="card mb-3 bg-light text-center">
     <a href="{{ url_for('npcs_index', campaign_id=campaign_id) }}"><img class="card-img-top" src="/static/images/The Little Executioner.jpg" alt="NPCs"></a>
     <div class="card-body">
-      <a href="{{ url_for('npcs_index', campaign_id=campaign_id) }}">NPCs: {{number_of_npcs}}</a>
+      <a href="{{ url_for('npcs_index', campaign_id=campaign_id) }}" class="customLink">NPCs: {{number_of_npcs}}</a>
     </div>
   </div>
 </div>
