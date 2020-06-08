@@ -13,4 +13,11 @@ class RegisterForm(FlaskForm):
     password = PasswordField("Campaign's password", [validators.InputRequired()], render_kw={"placeholder": "Campaign's password"})
   
     class Meta:
-        csrf = False        
+        csrf = False 
+
+class DeleteForm(FlaskForm):
+    name = StringField("Campaign's name", [validators.InputRequired(), validators.Length(min=2, max=144)], render_kw={"placeholder": "Campaign's name"})
+    password = PasswordField("Campaign's password", render_kw={"placeholder": "Campaign's password"})
+  
+    class Meta:
+        csrf = False       

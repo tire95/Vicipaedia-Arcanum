@@ -6,6 +6,7 @@ from sqlalchemy.sql import text
 class Account(NameBase):
   
     password = db.Column(db.String(144), nullable=False)
+    campaigns = db.relationship("Campaign", backref="Account", lazy=True)
 
     def __init__(self, name, password):
         self.name = name

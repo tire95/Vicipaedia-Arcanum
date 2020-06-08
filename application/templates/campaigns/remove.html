@@ -1,0 +1,28 @@
+{% extends "layout2.html" %}
+{% block body %}
+<h3>Create a campaign</h3>
+<form method="POST" action="{{ url_for('campaigns_remove', campaign_id = campaign_id) }}">
+    <p>Are you sure you want to delete the campaign? This action is irreversible, and all the creatures and NPCs added to the campaign will be deleted.</p>
+    <p>If you are sure, please enter the campaing's name and password below and click "Delete campaign".</p>
+    <div class="row">
+        <div class="span-custom">
+            <div class="form-group">
+                {{ form.name(autofocus=true, class_="form-control") }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span-custom">
+            <div class="form-group">
+                {{ form.password(class_="form-control") }}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btnSubmit" value="Delete campaign" />
+    </div>
+</form>
+<div class="error-group">
+    <p>{{ error }}</p>
+</div>
+{% endblock %}

@@ -7,7 +7,7 @@ class Npc(NameBase):
     location = db.Column(db.String(144), nullable=False)
     occupation = db.Column(db.String(144), nullable=False)
     description = db.Column(db.String(1000), nullable=True)
-    campaign_id = db.Column(db.Integer, db.ForeignKey('campaign.id'), nullable=False)
+    campaign_id = db.Column(db.Integer, db.ForeignKey('campaign.id', ondelete='CASCADE'), nullable=False)
 
     def __init__(self, name, race, location, occupation, description, campaign_id):
         self.name = name

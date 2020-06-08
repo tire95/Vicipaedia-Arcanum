@@ -1,5 +1,4 @@
 body {
-    background-color: #ffffff;
     font-family: "Open Sans";
     font-size: 125%;
 }
@@ -54,7 +53,7 @@ textarea {
     background-color: rgb(19, 23, 46);
     border: none;
     border-radius: 1.5rem;
-    padding:1%;
+    padding:2%;
     margin-bottom:1%
 }
 .btnForgetPwd{
@@ -80,6 +79,7 @@ table#myTable{
 
 .card-title{
     text-align: center;
+    color: black;
 }
 
 .customLink{
@@ -95,7 +95,17 @@ table#myTable{
 }
 
 .nav-bottom {
-    position: fixed;
+    position: static;
     bottom: 0;
     width: 100%;
+}
+
+.btnSmall{
+    width: 20%;
+    color: #ffffff;
+    background-color: rgb(19, 23, 46);
+    border: none;
+    border-radius: 1.5rem;
+    padding:1%;
+    margin-bottom:1%
 }

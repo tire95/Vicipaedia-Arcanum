@@ -1,8 +1,8 @@
 from flask import render_template, request, redirect, url_for
 
 from application import app, db, bcrypt
-from application.campaigns.models import Campaign, check_account
-from application.campaigns.forms import CampaignForm, RegisterForm
+from application.campaigns.models import Campaign
+from application.campaigns.forms import CampaignForm, RegisterForm, DeleteForm
 from flask_login import login_required, current_user
 from application.auth.models import Account
 
@@ -22,7 +22,7 @@ def campaigns_create():
     if not form.validate():
         return render_template("campaigns/new.html", form = form)
 
-    campaign_to_add = Campaign(form.name.data, form.game_system.data, form.password.data)
+    campaign_to_add = Campaign(form.name.data, form.game_system.data, form.password.data, current_user.id)
     campaign_to_add.accounts.append(current_user)
 
     db.session().add(campaign_to_add)
@@ -61,12 +61,59 @@ def campaigns_register(campaign_id):
 @app.route("/campaigns/view/<campaign_id>/", methods=["GET"])
 @login_required
 def campaigns_view(campaign_id):
-    if check_account(campaign_id, current_user):
-        return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
-        campaign_id = campaign_id)
+    if Campaign.check_account(campaign_id, current_user):
+        if Campaign.check_admin(campaign_id, current_user):
+            return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
+            campaign_id = campaign_id, user_is_admin=True)
+        else:
+            return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
+            campaign_id = campaign_id, user_is_admin=False)
     else:
         return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
+
+@app.route("/campaigns/<campaign_id>/admin", methods=["GET"])
+@login_required
+def campaigns_admin_view(campaign_id):
+    campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
+
+    if Campaign.check_account(campaign_id, current_user) and Campaign.check_admin(campaign_id, current_user):
+        return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=Campaign.joined_accounts(campaign_id, current_user.id))
+    else:
+        return redirect(url_for("campaigns_view", campaign_id = campaign_id))
+
+
+
+@app.route("/campaigns/<campaign_id>/admin/remove/<account_id>", methods=["POST"])
+@login_required
+def campaigns_remove_account(account_id, campaign_id):
+    if Campaign.check_account(campaign_id, current_user) and Campaign.check_admin(campaign_id, current_user):
+        Campaign.remove_account(account_id, campaign_id)
+        return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=Campaign.joined_accounts(campaign_id))
+    else:
+        return redirect(url_for("campaigns_view", campaign_id = campaign_id))
+
+
+@app.route("/campaigns/<campaign_id>/admin/remove_campaign", methods=["GET", "POST"])
+@login_required
+def campaigns_remove(campaign_id):
+    if Campaign.check_account(campaign_id, current_user) and Campaign.check_admin(campaign_id, current_user):
+        if request.method == "GET":
+            return render_template("campaigns/remove.html", campaign_id = campaign_id, form = DeleteForm())
+
+        form = DeleteForm(request.form)
+
+        if form.validate():
+            campaign = db.session.query(Campaign).filter(Campaign.id==campaign_id).first()
+            if (not campaign.password or bcrypt.check_password_hash(campaign.password, form.password.data)) and campaign.name == form.name.data:
+                db.session.delete(campaign)
+                db.session.commit()
+                return redirect(url_for("campaigns_index"))
+
+        return render_template("campaigns/remove.html", campaign_id = campaign_id, form = form, error = "Wrong name and/or password")
+
+    else:
+        return redirect(url_for("campaigns_view", campaign_id = campaign_id))
 
 
     
