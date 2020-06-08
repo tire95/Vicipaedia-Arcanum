@@ -2,7 +2,7 @@ body {
     background-color: #ffffff;
     font-family: "Open Sans";
     font-size: 125%;
-  }
+}
 
 textarea {
     width: 300px;
@@ -49,7 +49,7 @@ textarea {
 }
 .btnSubmit{
     font-weight: 500;
-    width: 40%;
+    width: 60%;
     color: #ffffff;
     background-color: rgb(19, 23, 46);
     border: none;
@@ -94,3 +94,8 @@ table#myTable{
     width: 50%;
 }
 
+.nav-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
