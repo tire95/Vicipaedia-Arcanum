@@ -5,10 +5,11 @@
     <div class="row">
         <div class="span-custom">
             <div class="form-group">
-                {{ form.name(autofocus=true, class_="form-control") }}
-                <small id="helpBlock" class="form-text">
+                <label class="label-group">Creature's name</label>
+                <small class="helpBlock">
                     Minimun length: 2 characters
                 </small>
+                {{ form.name(autofocus=true, class_="form-control") }}
             </div>
         </div>
         <div class="span4">
@@ -23,10 +24,11 @@
     <div class="row">
         <div class="span-custom">
             <div class="form-group">
-                {{ form.type(class_="form-control") }}
-                <small id="helpBlock" class="form-text">
+                <label class="label-group">Creature's type</label>
+                <small class="helpBlock">
                     Minimun length: 2 characters. If unknown, enter "--"
                 </small>
+                {{ form.type(class_="form-control") }}
             </div>
         </div>
         <div class="span4">
@@ -40,10 +42,11 @@
     <div class="row">
         <div class="span-custom">
             <div class="form-group">
-                {{ form.size(class_="form-control") }}
-                <small id="helpBlock" class="form-text">
+                <label class="label-group">Creature's size</label>
+                <small class="helpBlock">
                     Minimun length: 2 characters. If unknown, enter "--"
                 </small>
+                {{ form.size(class_="form-control") }}
             </div>
         </div>
         <div class="span4">
@@ -56,10 +59,11 @@
     </div>
     <div class="row">
         <div class="form-group"  style="width: 100%;">
-            {{ form.description(class_="form-control") }}
-            <small id="helpBlock" class="form-text">
+            <label class="label-group">Description about the creature</label>
+            <small class="helpBlock">
                 Description is optional
             </small>
+            {{ form.description(class_="form-control") }}
         </div>
     </div>
     <div class="form-group">

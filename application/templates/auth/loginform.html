@@ -8,9 +8,11 @@
                   <form method="POST" action="{{ url_for('auth_login') }}">
                         {{ form.csrf_token }}
                         <div class="form-group">
+                              <label class="label-group">Username</label>
                               {{ form.name(autofocus=true,class_="form-control") }}
                         </div>
                         <div class="form-group">
+                              <label class="label-group">Password</label>
                               {{ form.password(class_="form-control") }}
                         </div>
                         <div class="form-group">
@@ -33,16 +35,18 @@
                   <form method="POST" action="{{ url_for('auth_register') }}">
                         {{ register_form.csrf_token }}
                         <div class="form-group">
-                              {{ register_form.register_name(class_="form-control") }}
-                              <small id="helpBlock" class="form-text">
-                                    Your account name must be at least 2 characters long
+                              <label class="label-group">Username</label>
+                              <small class="helpBlock">
+                                    Minimun length: 2 characters
                               </small>
+                              {{ register_form.register_name(class_="form-control") }}
                         </div>
                         <div class="form-group">
-                              {{ register_form.register_password(class_="form-control") }}
-                              <small id="passwordHelpBlock" class="form-text">
-                                    Your password must be at least 8 characters long
+                              <label class="label-group">Password</label>
+                              <small class="helpBlock">
+                                    Minimun length: 8 characters
                               </small>
+                              {{ register_form.register_password(class_="form-control") }}
                         </div>
                         <div class="form-group">
                               <input type="submit" class="btnSubmit" value="Register" />
