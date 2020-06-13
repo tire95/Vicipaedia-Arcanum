@@ -1,6 +1,6 @@
 {% extends "layout2.html" %}
 {% block body %}
-<a class="nav-link" href="{{ url_for('creatures_index', campaign_id=campaign_id) }}">Back to list</a>
+<a class="customLink" href="{{ url_for('creatures_index', campaign_id=campaign_id) }}">Back to list</a>
 <form method="POST" action="{{ url_for('creatures_create', campaign_id=campaign_id) }}">
     <div class="row">
         <div class="span-custom">

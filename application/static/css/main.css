@@ -56,10 +56,12 @@ textarea {
     padding:2%;
     margin-bottom:1%
 }
+
 .customLink{
     font-weight: 600;
     color: #0055df;
 }
+
 .customLink:hover{
     text-decoration:none;
     color: #002e79;
@@ -99,4 +101,9 @@ table#myTable{
     border-radius: 1.5rem;
     padding:1%;
     margin-bottom:1%
+}
+
+.page-item.active .page-link{
+    color: #ffffff;
+    background-color: rgb(19, 23, 46); 
 }

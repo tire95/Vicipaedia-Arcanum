@@ -1,7 +1,7 @@
 {% extends "layout2.html" %}
 
 {% block body %}
-<a class="nav-link" href="{{ url_for('open_creature', creature_id=creature.id, campaign_id=campaign_id) }}">Back to creature</a>
+<a class="customLink" href="{{ url_for('open_creature', creature_id=creature.id, campaign_id=campaign_id) }}">Back to creature</a>
 
 <p>Modify creature: {{ creature.name }}</p>
 <form method="POST" action="{{ url_for('modify_creature', creature_id=creature.id, campaign_id=campaign_id) }}">

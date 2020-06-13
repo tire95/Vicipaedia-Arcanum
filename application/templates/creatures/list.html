@@ -1,12 +1,8 @@
 {% extends "layout2.html" %}
 
 {% block body %}
-<script src="/static/filter.js"></script> 
 <div class="container">
-    <a class="nav-link" href="{{ url_for('creatures_form', campaign_id=campaign_id) }}">Add a creature</a>
-
-    <input class="form-control mb-4" id="tableSearch" type="text" onkeyup="myFunction()"
-      placeholder="Type something to search list items">
+    <a class="customLink" href="{{ url_for('creatures_form', campaign_id=campaign_id) }}">Add a creature</a>
   
     <table id="myTable" class="table">
         <thead class="thead-light">

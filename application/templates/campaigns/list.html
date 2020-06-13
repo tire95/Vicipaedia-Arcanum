@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<script src="/static/filter.js"></script>
 <p>You have joined {{ number_of_joined_campaigns }} campaigns</p>
 {% for campaign in joined_campaigns %}
 <a class="customLink" href="{{ url_for('campaigns_view', campaign_id=campaign.id) }}">{{ campaign.name }}</a>
@@ -13,9 +12,6 @@
 <p>Other campaigns:</p>
 
 <div class="container">
-    <input class="form-control mb-4" id="tableSearch" type="text" onkeyup="myFunction()"
-      placeholder="Type something to search list items">
-  
     <table id="myTable" class="table">
         <thead class="thead-light">
             <tr>
