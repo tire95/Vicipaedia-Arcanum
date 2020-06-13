@@ -3,7 +3,7 @@
 {% block body %}
 <a class="customLink" href="{{ url_for('open_creature', creature_id=creature.id, campaign_id=campaign_id) }}">Back to creature</a>
 
-<p>Modify creature: {{ creature.name }}</p>
+<h1>Modify creature: {{ creature.name }}</h1>
 <form method="POST" action="{{ url_for('modify_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
     <div class="row">
         <div class="span-custom">

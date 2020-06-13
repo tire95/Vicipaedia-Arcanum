@@ -1,7 +1,7 @@
 {% extends "layout2.html" %}
 {% block body %}
 <a class="customLink" href="{{ url_for('npcs_index', campaign_id=campaign_id) }}">Back to list</a>
-
+<h1>Add a new NPC</h1>
 <form method="POST" action="{{ url_for('npcs_create', campaign_id=campaign_id) }}">
     <div class="row">
         <div class="span-custom">
