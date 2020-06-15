@@ -27,6 +27,7 @@
             <td>
               <form method="POST" action="{{ url_for('campaigns_remove_account', account_id=account.id, campaign_id=campaign_id) }}">
                 <input type="submit" class="btnSubmit" value="Remove account from campaign"/>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
               </form>
             </td>
           </tr>

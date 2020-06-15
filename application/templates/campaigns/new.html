@@ -2,6 +2,7 @@
 {% block body %}
 <h1>Create a campaign</h1>
 <form method="POST" action="{{ url_for('campaigns_create') }}">
+    {{ form.csrf_token }}
     <div class="row">
         <div class="span-custom">
             <div class="form-group">

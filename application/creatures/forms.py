@@ -7,5 +7,3 @@ class CreatureForm(FlaskForm):
     size = StringField("Creature size", [validators.InputRequired(), validators.Length(min=2, max=144)], render_kw={"placeholder": "Creature's size"})
     description = TextAreaField("Description about the creature", [validators.Length(max=1000)], render_kw={"placeholder": "Description about the creature"})
  
-    class Meta:
-        csrf = False

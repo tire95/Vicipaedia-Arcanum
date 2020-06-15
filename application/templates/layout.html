@@ -28,6 +28,7 @@
           </ul>
           <ul class="navbar-nav ml-auto">
             <form method="POST" action="{{ url_for('auth_logout') }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
               <input type="submit" class="btn btn-outline-light" value="Logout"/>
             </form>
           </ul>

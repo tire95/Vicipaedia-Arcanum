@@ -8,5 +8,3 @@ class NpcForm(FlaskForm):
     occupation = StringField("NPC's occupation", [validators.InputRequired(), validators.Length(min=2, max=144)], render_kw={"placeholder": "NPC's occupation"})
     description = TextAreaField("Description about the NPC", [validators.Length(max=1000)], render_kw={"placeholder": "Description about the NPC"})
 
-    class Meta:
-        csrf = False

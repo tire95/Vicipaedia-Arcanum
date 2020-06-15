@@ -28,6 +28,7 @@
                 <td>
                     <form method="POST" action="{{ url_for('campaigns_register', campaign_id=campaign.id) }}">
                         <input type="submit" class="btnSubmit" value="Join campaign"/>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     </form>
                 </td>
             </tr>

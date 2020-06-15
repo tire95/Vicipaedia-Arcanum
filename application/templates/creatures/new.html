@@ -4,6 +4,7 @@
 
 <a class="customLink" href="{{ url_for('creatures_index', campaign_id=campaign_id) }}">Back to list</a>
 <form method="POST" action="{{ url_for('creatures_create', campaign_id=campaign_id) }}">
+    {{ form.csrf_token }}
     <div class="row">
         <div class="span-custom">
             <div class="form-group">

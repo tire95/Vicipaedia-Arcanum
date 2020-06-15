@@ -32,6 +32,7 @@
 <div class="span-custom">
     <form method="POST" action="{{ url_for('remove_npc', npc_id=npc.id, campaign_id=campaign_id) }}">
         <input type="submit" class="btnSubmit" value="Remove NPC"/>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     </form>
 </div>
 
