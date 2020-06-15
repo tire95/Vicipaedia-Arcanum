@@ -8,11 +8,30 @@
     <div class="row">
         <div class="span-custom">
             <div class="form-group">
+                <label class="label-group">NPC's name</label>
+                <small class="helpBlock">
+                    Minimun length: 2 characters
+                </small>
+                {{ form.name(autofocus=true, class_="form-control") }}
+            </div>
+        </div>
+        <div class="span4">
+            <div class="error-group">
+                {% for error in form.name.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+                <p>{{ error }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span-custom">
+            <div class="form-group">
                 <label class="label-group">NPC's race</label>
                 <small class="helpBlock">
                     Minimun length: 2 characters. If unknown, enter "--"
                 </small>
-                {{ form.race(autofocus=true, class_="form-control") }}
+                {{ form.race(class_="form-control") }}
             </div>
         </div>
         <div class="span4">

@@ -2,7 +2,7 @@ from application import app, db
 from flask import redirect, render_template, request, url_for
 from flask_login import login_required, current_user
 from application.npcs.models import Npc
-from application.npcs.forms import NpcForm, ModifyForm
+from application.npcs.forms import NpcForm
 from application.campaigns.models import Campaign
 
 
@@ -74,9 +74,10 @@ def modify_npc(npc_id, campaign_id):
     if Campaign.check_account(campaign_id, current_user):
 
         npc = db.session.query(Npc).get(npc_id)
-        form = ModifyForm(request.form)
+        form = NpcForm(request.form)
 
         if request.method == "GET":
+            form.name.data = npc.name
             form.race.data = npc.race
             form.location.data = npc.location
             form.occupation.data = npc.occupation
@@ -85,6 +86,13 @@ def modify_npc(npc_id, campaign_id):
 
         if not form.validate():
             return render_template("npcs/modify.html", npc_id = npc_id, form = form, npc = npc, campaign_id=campaign_id)
+        
+        # If trying to change the name, check whether an npc with the new name already exists
+        if not npc.name == form.name.data:
+            if db.session.query(Npc).filter(Npc.name.ilike(form.name.data)).filter(Npc.campaign_id==campaign_id).first():
+                return render_template("npcs/modify.html", npc_id = npc_id, form = form, npc = npc, campaign_id=campaign_id, error = "An NPC with such a name already exists")
+            else:
+                npc.name = form.name.data
 
         npc.race = form.race.data
         npc.location = form.location.data

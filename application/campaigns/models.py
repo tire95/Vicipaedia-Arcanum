@@ -52,12 +52,10 @@ class Campaign(NameBase):
         stmt = text("DELETE FROM association WHERE association.account_id = :account_id AND association.campaign_id = :campaign_id").params(account_id=account_id, campaign_id=campaign_id)
         db.engine.execute(stmt)
 
-
     # Function for checking whether a certain user is already registered to a campaign 
     @staticmethod
     def check_account(campaign_id, user):
         return db.session.query(Campaign).filter(Campaign.id==campaign_id).filter(Campaign.accounts.contains(user)).first()
-
 
     # Function for checking whether a certain user is admin of a campaign
     @staticmethod

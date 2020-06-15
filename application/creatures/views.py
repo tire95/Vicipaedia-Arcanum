@@ -2,7 +2,7 @@ from application import app, db
 from flask import redirect, render_template, request, url_for
 from flask_login import login_required, current_user
 from application.creatures.models import Creature
-from application.creatures.forms import CreatureForm, ModifyForm
+from application.creatures.forms import CreatureForm
 from application.campaigns.models import Campaign
 
 
@@ -74,16 +74,24 @@ def modify_creature(creature_id, campaign_id):
     if Campaign.check_account(campaign_id, current_user):
 
         creature = db.session.query(Creature).get(creature_id)
-        form = ModifyForm(request.form)
+        form = CreatureForm(request.form)
 
         if request.method == "GET":
+            form.name.data = creature.name
             form.type.data = creature.type
             form.size.data = creature.size
             form.description.data = creature.description
-            return render_template("creatures/modify.html", creature_id = creature_id, form = form, creature = creature,campaign_id=campaign_id)
+            return render_template("creatures/modify.html", creature_id = creature_id, form = form, creature = creature, campaign_id=campaign_id)
 
         if not form.validate():
             return render_template("creatures/modify.html", creature_id = creature_id, form = form, creature = creature, campaign_id=campaign_id)
+
+        # If trying to change the name, check whether a creature with the new name already exists
+        if not creature.name == form.name.data:
+            if db.session.query(Creature).filter(Creature.name.ilike(form.name.data)).filter(Creature.campaign_id==campaign_id).first():
+                return render_template("creatures/modify.html", creature_id = creature_id, form = form, creature = creature, campaign_id=campaign_id, error = "A creature with such a name already exists")
+            else:
+                creature.name = form.name.data
 
         creature.type = form.type.data
         creature.size = form.size.data
