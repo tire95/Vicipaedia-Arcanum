@@ -10,7 +10,7 @@ from application.campaigns.models import Campaign
 @app.route("/campaigns/<campaign_id>/npcs", methods=["GET"])
 @login_required
 def npcs_index(campaign_id):
-    if Campaign.check_account(campaign_id, current_user):
+    if Campaign.is_registered_to_campaign(campaign_id, current_user):
         return render_template("npcs/list.html", npcs=db.session.query(Npc).filter_by(campaign_id=campaign_id).all(),
          campaign_id=campaign_id)
     return redirect(url_for("campaigns_register", campaign_id=campaign_id))
@@ -19,7 +19,7 @@ def npcs_index(campaign_id):
 @app.route("/campaigns/<campaign_id>/npcs/new/")
 @login_required
 def npcs_form(campaign_id):
-    if Campaign.check_account(campaign_id, current_user):
+    if Campaign.is_registered_to_campaign(campaign_id, current_user):
         return render_template("npcs/new.html", form = NpcForm(), campaign_id=campaign_id)
     return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
@@ -27,7 +27,7 @@ def npcs_form(campaign_id):
 @app.route("/campaigns/<campaign_id>/npcs/<npc_id>/remove/", methods=["POST"])
 @login_required
 def remove_npc(npc_id, campaign_id):
-    if Campaign.check_account(campaign_id, current_user):
+    if Campaign.is_registered_to_campaign(campaign_id, current_user):
         db.session.query(Npc).filter_by(id=npc_id).delete()
         db.session().commit()
         return redirect(url_for("npcs_index", campaign_id=campaign_id))
@@ -38,7 +38,7 @@ def remove_npc(npc_id, campaign_id):
 @app.route("/campaigns/<campaign_id>/npcs/new/", methods=["POST"])
 @login_required
 def npcs_create(campaign_id):
-    if Campaign.check_account(campaign_id, current_user):
+    if Campaign.is_registered_to_campaign(campaign_id, current_user):
         
         form = NpcForm(request.form)
 
@@ -63,7 +63,7 @@ def npcs_create(campaign_id):
 @app.route("/campaigns/<campaign_id>/npcs/<npc_id>/", methods=["GET"])
 @login_required
 def open_npc(npc_id, campaign_id):
-    if Campaign.check_account(campaign_id, current_user):
+    if Campaign.is_registered_to_campaign(campaign_id, current_user):
         return render_template("npcs/npc.html", npc=db.session.query(Npc).get(npc_id), campaign_id=campaign_id)
     return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
@@ -71,7 +71,7 @@ def open_npc(npc_id, campaign_id):
 @app.route("/campaigns/<campaign_id>/npcs/<npc_id>/modify", methods=["GET", "POST"])
 @login_required
 def modify_npc(npc_id, campaign_id):
-    if Campaign.check_account(campaign_id, current_user):
+    if Campaign.is_registered_to_campaign(campaign_id, current_user):
 
         npc = db.session.query(Npc).get(npc_id)
         form = NpcForm(request.form)

@@ -1,13 +1,11 @@
 {% extends "layout2.html" %}
 
 {% block body %}
+<h1>NPC: {{ npc.name }} </h1>
+
 <a class="customLink" href="{{ url_for('npcs_index', campaign_id=campaign_id) }}">Back to list</a>
 <table id="myTable" class="table">
     <tbody>
-        <tr>
-            <th>Name</th>
-            <td>{{ npc.name }}</td>
-        </tr>
         <tr>
             <th>Race</th>
             <td>{{ npc.race }}</td>

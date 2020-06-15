@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<p>You have joined {{ number_of_joined_campaigns }} campaigns</p>
+<h1>You have joined {{ number_of_joined_campaigns }} campaigns</h1>
 {% for campaign in joined_campaigns %}
 <a class="customLink" href="{{ url_for('campaigns_view', campaign_id=campaign.id) }}">{{ campaign.name }}</a>
 <p></p>
@@ -26,7 +26,7 @@
                 <td>{{ campaign.name }}</td>
                 <td>{{ campaign.game_system }}</td>
                 <td>
-                    <form method="GET" action="{{ url_for('campaigns_view', campaign_id=campaign.id) }}">
+                    <form method="POST" action="{{ url_for('campaigns_register', campaign_id=campaign.id) }}">
                         <input type="submit" class="btnSubmit" value="Join campaign"/>
                     </form>
                 </td>

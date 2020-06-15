@@ -2,6 +2,8 @@
 
 {% block body %}
 
+<h1>Admin view</h1>
+
 <div class="container">
   <form method="GET" action="{{ url_for('campaigns_change_password', campaign_id=campaign_id) }}">
     <input type="submit" class="btnSmall" value="Change password"/>

@@ -54,11 +54,11 @@ class Campaign(NameBase):
 
     # Function for checking whether a certain user is already registered to a campaign 
     @staticmethod
-    def check_account(campaign_id, user):
+    def is_registered_to_campaign(campaign_id, user):
         return db.session.query(Campaign).filter(Campaign.id==campaign_id).filter(Campaign.accounts.contains(user)).first()
 
     # Function for checking whether a certain user is admin of a campaign
     @staticmethod
-    def check_admin(campaign_id, user):
+    def is_campaign_admin(campaign_id, user):
         campaign = db.session.query(Campaign).filter(Campaign.id==campaign_id).first()
         return campaign.admin_id == user.id

@@ -20,13 +20,13 @@ def auth_login():
     return render_template("auth/loginform.html", form = form, register_form = RegisterForm(), error = "No such username or password")
 
 
-@app.route("/auth/logout")
+@app.route("/auth/logout", methods = ["POST"])
 def auth_logout():
     logout_user()
     return redirect(url_for("auth_login"))
 
 
-@app.route("/auth/register", methods=["GET", "POST"])
+@app.route("/auth/register", methods=["POST"])
 def auth_register():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -40,7 +40,7 @@ def auth_register():
 
         return redirect(url_for("auth_login"))
     else:
-        return render_template("auth/loginform.html", form = LoginForm(), register_form = form, register_error = "Either the account name or the password is too short")
+        return render_template("auth/loginform.html", form = LoginForm(), register_form = form)
 
 
 

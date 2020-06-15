@@ -10,41 +10,43 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark py-0">
       <div class="container-fluid">
         <a class="navbar-brand" href="{{ url_for('campaigns_index') }}">Vicipaedia Arcanum</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            {% if current_user.is_authenticated %}
+          {% if current_user.is_authenticated %}
+          <ul class="navbar-nav mr-auto">
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('campaigns_index') }} ">List campaigns</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('campaigns_create') }} ">Create a campaign</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth_logout') }} ">Logout</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth_login') }} ">Login or register</a>
-            </li>
-            {% endif %}
           </ul>
+          <ul class="navbar-nav ml-auto">
+            <form method="POST" action="{{ url_for('auth_logout') }}">
+              <input type="submit" class="btn btn-outline-light" value="Logout"/>
+            </form>
+          </ul>
+          {% else %}
+          <ul class="navbar-nav ml-auto">
+            <a class="nav-link" href="{{ url_for('auth_login') }} ">Login or register</a>
+          </ul>
+          {% endif %}
         </div>
       </div>
     </nav>
     <main role="main" class="container">
-    {% block body %}
-      <p>
-        Content.
-      </p>
-    {% endblock %}
+      {% block body %}
+        <p>
+          Content.
+        </p>
+      {% endblock %}
     </main>
-    <nav class="nav-bottom navbar-expand-md navbar-dark bg-dark">
+    <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark py-0">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBottom">
         <span class="navbar-toggler-icon"></span>
       </button>

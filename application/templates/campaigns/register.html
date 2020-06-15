@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<p>Join the campaign by giving the password below</p>
+<h1>Join the campaign by giving the password below</h1>
 <form method="POST" action="{{ url_for('campaigns_register', campaign_id=campaign_id) }}">
   <div class="form-group">
       {{ form.password(class_="form-control") }}
