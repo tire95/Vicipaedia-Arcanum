@@ -15,7 +15,7 @@ def auth_login():
         user = db.session.query(Account).filter_by(name=form.name.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
-            return redirect(url_for("campaigns_index"))
+            return redirect(url_for("campaigns_list"))
 
     return render_template("auth/loginform.html", form = form, register_form = RegisterForm(), error = "No such username or password")
 

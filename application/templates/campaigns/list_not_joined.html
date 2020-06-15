@@ -1,9 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h1>You have joined {{ number_of_joined_campaigns }} campaigns</h1>
-
-<p>Want more campaigns? <a class="customLink" href="{{ url_for('campaigns_list_not_joined') }}">Click here for more campaigns.</a></p>
+<h1>Campaigns you have not joined</h1>
 
 <div class="container">
     <table id="myTable" class="table">
@@ -15,13 +13,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for campaign in joined_campaigns %}
+            {% for campaign in not_joined_campaigns %}
             <tr>
                 <td>{{ campaign.name }}</td>
                 <td>{{ campaign.game_system }}</td>
                 <td>
-                    <form method="GET" action="{{ url_for('campaigns_view', campaign_id=campaign.id) }}">
+                    <form method="POST" action="{{ url_for('campaigns_register', campaign_id=campaign.id) }}">
                         <input type="submit" class="btnSubmit" value="Join campaign"/>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     </form>
                 </td>
             </tr>

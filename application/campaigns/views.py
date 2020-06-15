@@ -28,17 +28,15 @@ def campaigns_create():
     db.session().add(campaign_to_add)
     db.session().commit()
 
-    return redirect(url_for("campaigns_index"))
+    return redirect(url_for("campaigns_list"))
 
 
 @app.route("/campaigns", methods=["GET"])
 @login_required
-def campaigns_index():
+def campaigns_list():
     joined_campaigns=db.session.query(Campaign).filter(Campaign.accounts.contains(current_user))
-    not_joined_campaigns=db.session.query(Campaign).filter(~Campaign.accounts.contains(current_user))
     number_of_joined_campaigns=Account.number_of_joined_campaigns(current_user.id)
     return render_template("campaigns/list.html", joined_campaigns=joined_campaigns,
-        not_joined_campaigns=not_joined_campaigns, 
         number_of_joined_campaigns=number_of_joined_campaigns)
 
 
@@ -105,7 +103,7 @@ def campaigns_remove(campaign_id):
             if (not campaign.password or bcrypt.check_password_hash(campaign.password, form.password.data)) and campaign.name == form.name.data:
                 db.session.delete(campaign)
                 db.session.commit()
-                return redirect(url_for("campaigns_index"))
+                return redirect(url_for("campaigns_list"))
 
         return render_template("campaigns/remove.html", campaign_id = campaign_id, form = form, error = "Wrong name and/or password")
 
@@ -127,7 +125,15 @@ def campaigns_change_password(campaign_id):
             if not campaign.password or bcrypt.check_password_hash(campaign.password, form.old_password.data):
                 campaign.password = bcrypt.generate_password_hash(form.new_password.data).decode("utf8")
                 db.session.commit()
-                return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=Campaign.joined_accounts(campaign_id, current_user.id))
+                return redirect(url_for("campaigns_admin_view", campaign_id = campaign_id))
         return render_template("campaigns/change_password.html", campaign_id = campaign_id, form = form, error = "Wrong password")
     else:
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))
+
+
+@app.route("/campaigns/not_joined", methods=["GET"])
+@login_required
+def campaigns_list_not_joined():
+    not_joined_campaigns=db.session.query(Campaign).filter(~Campaign.accounts.contains(current_user))
+    return render_template("campaigns/list_not_joined.html", not_joined_campaigns=not_joined_campaigns)
+

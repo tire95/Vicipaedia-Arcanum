@@ -12,7 +12,7 @@
   <body>
     <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark py-0">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('campaigns_index') }}">Vicipaedia Arcanum</a>
+        <a class="navbar-brand" href="{{ url_for('campaigns_list') }}">Vicipaedia Arcanum</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,7 +23,7 @@
               <a class="nav-link" href="{{ url_for('campaigns_view', campaign_id=campaign_id) }} ">Campaign's front page</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('campaigns_index') }} ">List campaigns</a>
+              <a class="nav-link" href="{{ url_for('campaigns_list') }} ">List campaigns</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('campaigns_create') }} ">Create a campaign</a>
