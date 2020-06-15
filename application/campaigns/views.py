@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 
 from application import app, db, bcrypt
 from application.campaigns.models import Campaign
-from application.campaigns.forms import CampaignForm, RegisterForm, DeleteForm
+from application.campaigns.forms import CampaignForm, RegisterForm, DeleteForm, PasswordForm
 from flask_login import login_required, current_user
 from application.auth.models import Account
 
@@ -75,13 +75,10 @@ def campaigns_view(campaign_id):
 @app.route("/campaigns/<campaign_id>/admin", methods=["GET"])
 @login_required
 def campaigns_admin_view(campaign_id):
-    campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
-
     if Campaign.check_account(campaign_id, current_user) and Campaign.check_admin(campaign_id, current_user):
         return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=Campaign.joined_accounts(campaign_id, current_user.id))
     else:
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))
-
 
 
 @app.route("/campaigns/<campaign_id>/admin/remove/<account_id>", methods=["POST"])
@@ -89,7 +86,7 @@ def campaigns_admin_view(campaign_id):
 def campaigns_remove_account(account_id, campaign_id):
     if Campaign.check_account(campaign_id, current_user) and Campaign.check_admin(campaign_id, current_user):
         Campaign.remove_account(account_id, campaign_id)
-        return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=Campaign.joined_accounts(campaign_id))
+        return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=Campaign.joined_accounts(campaign_id, current_user.id))
     else:
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))
 
@@ -116,4 +113,21 @@ def campaigns_remove(campaign_id):
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))
 
 
-    
+@app.route("/campaigns/<campaign_id>/admin/change_password", methods=["GET", "POST"])
+@login_required
+def campaigns_change_password(campaign_id):
+    if Campaign.check_account(campaign_id, current_user) and Campaign.check_admin(campaign_id, current_user):
+        if request.method == "GET":
+            return render_template("campaigns/change_password.html", campaign_id = campaign_id, form = PasswordForm())
+
+        form = PasswordForm(request.form)
+
+        if form.validate():
+            campaign = db.session.query(Campaign).filter(Campaign.id==campaign_id).first()
+            if not campaign.password or bcrypt.check_password_hash(campaign.password, form.old_password.data):
+                campaign.password = bcrypt.generate_password_hash(form.new_password.data).decode("utf8")
+                db.session.commit()
+                return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=Campaign.joined_accounts(campaign_id, current_user.id))
+        return render_template("campaigns/change_password.html", campaign_id = campaign_id, form = form, error = "Wrong password")
+    else:
+        return redirect(url_for("campaigns_view", campaign_id = campaign_id))

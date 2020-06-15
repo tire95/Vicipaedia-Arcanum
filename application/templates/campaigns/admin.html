@@ -3,6 +3,9 @@
 {% block body %}
 
 <div class="container">
+  <form method="GET" action="{{ url_for('campaigns_change_password', campaign_id=campaign_id) }}">
+    <input type="submit" class="btnSmall" value="Change password"/>
+  </form>
   <form method="GET" action="{{ url_for('campaigns_remove', campaign_id=campaign_id) }}">
     <input type="submit" class="btnSmall" value="Delete campaign"/>
   </form>

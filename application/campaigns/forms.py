@@ -20,4 +20,11 @@ class DeleteForm(FlaskForm):
     password = PasswordField("Campaign's password", render_kw={"placeholder": "Campaign's password"})
   
     class Meta:
-        csrf = False       
+        csrf = False
+
+class PasswordForm(FlaskForm):
+    old_password = PasswordField("Old password", render_kw={"placeholder": "Old password"})
+    new_password = PasswordField("New password", [validators.InputRequired()], render_kw={"placeholder": "New password"})
+  
+    class Meta:
+        csrf = False           
