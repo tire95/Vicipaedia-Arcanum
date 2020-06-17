@@ -42,14 +42,14 @@ def creatures_create(campaign_id):
 
         form = CreatureForm(request.form)
 
-        if db.session.query(Creature).filter(Creature.name.ilike(form.name.data)).filter(Creature.campaign_id==campaign_id).first():
+        if db.session.query(Creature).filter(Creature.creature_name.ilike(form.creature_name.data)).filter(Creature.campaign_id==campaign_id).first():
             return render_template("creatures/new.html", form = form,
                                 error = "A creature with such a name already exists", campaign_id=campaign_id)
 
         if not form.validate():
             return render_template("creatures/new.html", form = form, campaign_id=campaign_id)
 
-        creature_to_add = Creature(form.name.data, form.type.data, form.size.data, form.description.data, campaign_id)
+        creature_to_add = Creature(form.creature_name.data, form.type.data, form.size.data, form.description.data, campaign_id)
 
         db.session().add(creature_to_add)
         db.session().commit()
@@ -77,7 +77,7 @@ def modify_creature(creature_id, campaign_id):
         form = CreatureForm(request.form)
 
         if request.method == "GET":
-            form.name.data = creature.name
+            form.creature_name.data = creature.creature_name
             form.type.data = creature.type
             form.size.data = creature.size
             form.description.data = creature.description
@@ -87,11 +87,11 @@ def modify_creature(creature_id, campaign_id):
             return render_template("creatures/modify.html", creature_id = creature_id, form = form, creature = creature, campaign_id=campaign_id)
 
         # If trying to change the name, check whether a creature with the new name already exists
-        if not creature.name == form.name.data:
-            if db.session.query(Creature).filter(Creature.name.ilike(form.name.data)).filter(Creature.campaign_id==campaign_id).first():
+        if not creature.creature_name == form.creature_name.data:
+            if db.session.query(Creature).filter(Creature.creature_name.ilike(form.creature_name.data)).filter(Creature.campaign_id==campaign_id).first():
                 return render_template("creatures/modify.html", creature_id = creature_id, form = form, creature = creature, campaign_id=campaign_id, error = "A creature with such a name already exists")
             else:
-                creature.name = form.name.data
+                creature.creature_name = form.creature_name.data
 
         creature.type = form.type.data
         creature.size = form.size.data

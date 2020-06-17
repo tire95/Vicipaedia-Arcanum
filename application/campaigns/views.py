@@ -15,14 +15,14 @@ def campaigns_create():
 
     form = CampaignForm(request.form)
 
-    if db.session.query(Campaign).filter(Campaign.name.ilike(form.name.data)).first():
+    if db.session.query(Campaign).filter(Campaign.campaign_name.ilike(form.campaign_name.data)).first():
         return render_template("campaigns/new.html", form = form,
                                 error = "A campaign with such a name already exists")
 
     if not form.validate():
         return render_template("campaigns/new.html", form = form)
 
-    campaign_to_add = Campaign(form.name.data, form.game_system.data, form.password.data, current_user.id)
+    campaign_to_add = Campaign(form.campaign_name.data, form.game_system.data, form.password.data, current_user.id)
     campaign_to_add.accounts.append(current_user)
 
     db.session().add(campaign_to_add)
@@ -61,7 +61,7 @@ def campaigns_register(campaign_id):
 def campaigns_view(campaign_id):
     campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
     return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
-        campaign_id = campaign_id, campaign_name = campaign.name, user_is_admin=Campaign.is_campaign_admin(campaign_id, current_user))
+        campaign_id = campaign_id, campaign_name = campaign.campaign_name, user_is_admin=Campaign.is_campaign_admin(campaign_id, current_user))
 
 
     return redirect(url_for("campaigns_register", campaign_id=campaign_id))
@@ -74,7 +74,7 @@ def campaigns_admin_view(campaign_id):
         campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
         accounts=Campaign.joined_accounts(campaign_id, current_user.id)
         number_of_joined_accounts=Campaign.number_of_joined_accounts(campaign_id, current_user.id)
-        return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=accounts, number_of_joined_accounts=number_of_joined_accounts, campaign_name=campaign.name)
+        return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=accounts, number_of_joined_accounts=number_of_joined_accounts, campaign_name=campaign.campaign_name)
     else:
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))
 
@@ -95,18 +95,18 @@ def campaigns_remove(campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user) and Campaign.is_campaign_admin(campaign_id, current_user):
         campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
         if request.method == "GET":
-            return render_template("campaigns/remove.html", campaign_id = campaign_id, form = DeleteForm(), campaign_name = campaign.name)
+            return render_template("campaigns/remove.html", campaign_id = campaign_id, form = DeleteForm(), campaign_name = campaign.campaign_name)
 
         form = DeleteForm(request.form)
 
         if form.validate():
             campaign = db.session.query(Campaign).filter(Campaign.id==campaign_id).first()
-            if (not campaign.password or bcrypt.check_password_hash(campaign.password, form.password.data)) and campaign.name == form.name.data:
+            if (not campaign.password or bcrypt.check_password_hash(campaign.password, form.password.data)) and campaign.campaign_name == form.campaign_name.data:
                 db.session.delete(campaign)
                 db.session.commit()
                 return redirect(url_for("campaigns_list"))
 
-        return render_template("campaigns/remove.html", campaign_id = campaign_id, form = form, campaign_name = campaign.name, error = "Wrong name and/or password")
+        return render_template("campaigns/remove.html", campaign_id = campaign_id, form = form, campaign_name = campaign.campaign_name, error = "Wrong name and/or password")
 
     else:
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))

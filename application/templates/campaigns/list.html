@@ -17,7 +17,7 @@
         <tbody>
             {% for campaign in joined_campaigns %}
             <tr>
-                <td>{{ campaign.name }}</td>
+                <td>{{ campaign.campaign_name }}</td>
                 <td>{{ campaign.game_system }}</td>
                 <td>
                     <form method="GET" action="{{ url_for('campaigns_view', campaign_id=campaign.id) }}">

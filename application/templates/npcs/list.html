@@ -16,7 +16,7 @@
         <tbody>
             {% for npc in npcs %}
             <tr>
-                <td>{{ npc.name }}</td>
+                <td>{{ npc.npc_name }}</td>
                 <td>{{ npc.location }}</td>
                 <td>
                     <form method="GET" action="{{ url_for('open_npc', npc_id=npc.id, campaign_id=campaign_id) }}">

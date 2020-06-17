@@ -1,10 +1,11 @@
 from application import db, bcrypt
-from application.models import NameBase
+from application.models import BaseModel
 from sqlalchemy.sql import text
 
 
-class Account(NameBase):
+class Account(BaseModel):
   
+    name = db.Column(db.String(144), nullable=False)
     password = db.Column(db.String(144), nullable=False)
     campaigns = db.relationship("Campaign", backref="Account", lazy=True)
 

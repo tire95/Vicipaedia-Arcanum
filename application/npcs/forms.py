@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, validators
  
 class NpcForm(FlaskForm):
-    name = StringField("NPC's name", [validators.DataRequired(), validators.Length(min=2, max=144)], render_kw={"placeholder": "NPC's name"})
+    npc_name = StringField("NPC's name", [validators.DataRequired(), validators.Length(min=2, max=144)], render_kw={"placeholder": "NPC's name"})
     race = StringField("NPC's race", [validators.DataRequired(), validators.Length(min=2, max=144)], render_kw={"placeholder": "NPC's race"})
     location = StringField("NPC's location", [validators.DataRequired(), validators.Length(min=2, max=144)], render_kw={"placeholder": "NPC's location"})
     occupation = StringField("NPC's occupation", [validators.DataRequired(), validators.Length(min=2, max=144)], render_kw={"placeholder": "NPC's occupation"})

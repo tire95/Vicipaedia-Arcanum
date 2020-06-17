@@ -1,6 +1,6 @@
 from application import db
 
-class NameBase(db.Model):
+class BaseModel(db.Model):
 
     __abstract__ = True
   
@@ -8,5 +8,3 @@ class NameBase(db.Model):
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
         onupdate=db.func.current_timestamp())
-
-    name = db.Column(db.String(144), nullable=False)

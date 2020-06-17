@@ -1,5 +1,5 @@
 from application import db, bcrypt
-from application.models import NameBase
+from application.models import BaseModel
 from sqlalchemy.sql import text
 
 
@@ -9,7 +9,8 @@ association_table = db.Table('association',
     db.Column('campaign_id', db.Integer, db.ForeignKey('campaign.id'))
 )
 
-class Campaign(NameBase):
+class Campaign(BaseModel):
+    campaign_name = db.Column(db.String(144), nullable=False)
     game_system = db.Column(db.String(144), nullable=False)
     password = db.Column(db.String(144), nullable=True)
 
@@ -18,8 +19,8 @@ class Campaign(NameBase):
     accounts = db.relationship("Account", secondary=association_table)
     admin_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
 
-    def __init__(self, name, game_system, password, admin_id):
-        self.name = name
+    def __init__(self, campaign_name, game_system, password, admin_id):
+        self.campaign_name = campaign_name
         self.game_system = game_system
         if password:
             self.password = bcrypt.generate_password_hash(password).decode("utf8")

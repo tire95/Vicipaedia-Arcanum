@@ -1,7 +1,7 @@
 {% extends "layout2.html" %}
 
 {% block body %}
-<h1>Modify creature: {{ creature.name }}</h1>
+<h1>Modify creature: {{ creature.creature_name }}</h1>
 
 <a class="customLink" href="{{ url_for('open_creature', creature_id=creature.id, campaign_id=campaign_id) }}">Back to creature</a>
 
@@ -14,12 +14,12 @@
                 <small class="helpBlock">
                     Minimun length: 2 characters
                 </small>
-                {{ form.name(autofocus=true, class_="form-control") }}
+                {{ form.creature_name(autofocus=true, class_="form-control") }}
             </div>
         </div>
         <div class="span4">
             <div class="error-group">
-                {% for error in form.name.errors %}
+                {% for error in form.creature_name.errors %}
                 <p>{{ error }}</p>
                 {% endfor %}
                 <p>{{ error }}</p>

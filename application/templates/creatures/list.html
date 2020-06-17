@@ -18,7 +18,7 @@
         <tbody>
             {% for creature in creatures %}
             <tr>
-                <td>{{ creature.name }}</td>
+                <td>{{ creature.creature_name }}</td>
                 <td>{{ creature.type }}</td>
                 <td>
                     <form method="GET" action="{{ url_for('open_creature', creature_id=creature.id, campaign_id=campaign_id) }}">

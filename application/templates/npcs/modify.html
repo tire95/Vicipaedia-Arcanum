@@ -1,7 +1,7 @@
 {% extends "layout2.html" %}
 
 {% block body %}
-<h1>Modify NPC: {{ npc.name }}</h1>
+<h1>Modify NPC: {{ npc.npc_name }}</h1>
 
 <a class="customLink" href="{{ url_for('open_npc', npc_id=npc.id, campaign_id=campaign_id) }}">Back to NPC</a>
 
@@ -14,12 +14,12 @@
                 <small class="helpBlock">
                     Minimun length: 2 characters
                 </small>
-                {{ form.name(autofocus=true, class_="form-control") }}
+                {{ form.npc_name(autofocus=true, class_="form-control") }}
             </div>
         </div>
         <div class="span4">
             <div class="error-group">
-                {% for error in form.name.errors %}
+                {% for error in form.npc_name.errors %}
                 <p>{{ error }}</p>
                 {% endfor %}
                 <p>{{ error }}</p>

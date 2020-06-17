@@ -15,7 +15,7 @@
         <tbody>
             {% for campaign in not_joined_campaigns %}
             <tr>
-                <td>{{ campaign.name }}</td>
+                <td>{{ campaign.campaign_name }}</td>
                 <td>{{ campaign.game_system }}</td>
                 <td>
                     <form method="POST" action="{{ url_for('campaigns_register', campaign_id=campaign.id) }}">
