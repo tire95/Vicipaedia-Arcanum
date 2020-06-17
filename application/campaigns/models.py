@@ -48,16 +48,19 @@ class Campaign(NameBase):
         return response
 
     @staticmethod
+    def number_of_joined_accounts(campaign_id, account_id):
+        stmt = text("SELECT COUNT(id) FROM Account INNER JOIN association ON Account.id = association.account_id AND association.campaign_id = :campaign_id AND NOT Account.id = :account_id").params(campaign_id=campaign_id, account_id=account_id)
+        return db.engine.execute(stmt).scalar()
+
+    @staticmethod
     def remove_account(account_id, campaign_id):
         stmt = text("DELETE FROM association WHERE association.account_id = :account_id AND association.campaign_id = :campaign_id").params(account_id=account_id, campaign_id=campaign_id)
         db.engine.execute(stmt)
 
-    # Function for checking whether a certain user is already registered to a campaign 
     @staticmethod
     def is_registered_to_campaign(campaign_id, user):
         return db.session.query(Campaign).filter(Campaign.id==campaign_id).filter(Campaign.accounts.contains(user)).first()
 
-    # Function for checking whether a certain user is admin of a campaign
     @staticmethod
     def is_campaign_admin(campaign_id, user):
         campaign = db.session.query(Campaign).filter(Campaign.id==campaign_id).first()

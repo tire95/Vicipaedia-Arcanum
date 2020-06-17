@@ -74,7 +74,9 @@ def campaigns_view(campaign_id):
 @login_required
 def campaigns_admin_view(campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user) and Campaign.is_campaign_admin(campaign_id, current_user):
-        return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=Campaign.joined_accounts(campaign_id, current_user.id))
+        accounts=Campaign.joined_accounts(campaign_id, current_user.id)
+        number_of_joined_accounts=Campaign.number_of_joined_accounts(campaign_id, current_user.id)
+        return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=accounts, number_of_joined_accounts=number_of_joined_accounts)
     else:
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))
 
