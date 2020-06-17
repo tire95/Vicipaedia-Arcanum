@@ -6,7 +6,14 @@ Sisällysluettelo:
 * [Käyttötapaukset ja niihin liittyvät kyselyt](#käyttötapaukset-ja-niihin-liittyvät-kyselyt)
 * [Asennusohje](#asennusohje)
 * [Käyttöohje](#käyttöohje)
-* [Rajoitteet (jatkokehitysideat)](#rajoitteet/jatkokehitysideat)
+        * [Rekisteröityminen ja sisäänkirjautuminen](#rekisteröityminen-ja-sisäänkirjautuminen)
+        * [Kampanjan luominen](#kampanjan-luominen)
+        * [Kampanjaan liittyminen](#kampanjaan-liittyminen)
+        * [Entiteettien lisääminen kampanjaan](#entiteettien-lisääminen-kampanjaan)
+        * [Entiteettien muokkaaminen](#entiteettien-muokkaaminen)
+        * [Entiteettien poistaminen](##entiteettien-poistaminen)
+        * [Kampanjan hallinnointi](#kampanjan-hallinnointi)
+* [Rajoitteet (jatkokehitysideat)](#rajoitteet-jatkokehitysideat)
 
 ## Kuvaus
 
@@ -47,7 +54,7 @@ CREATE TABLE -lauseet:
             id INTEGER NOT NULL,
             date_created DATETIME,
             date_modified DATETIME,
-            name VARCHAR(144) NOT NULL,
+            campaign_name VARCHAR(144) NOT NULL,
             game_system VARCHAR(144) NOT NULL,
             password VARCHAR(144),
             admin_id INTEGER NOT NULL,
@@ -58,7 +65,7 @@ CREATE TABLE -lauseet:
             id INTEGER NOT NULL,
             date_created DATETIME,
             date_modified DATETIME,
-            name VARCHAR(144) NOT NULL,
+            creature_name VARCHAR(144) NOT NULL,
             type VARCHAR(144) NOT NULL,
             size VARCHAR(144) NOT NULL,
             description VARCHAR(1000),
@@ -76,7 +83,7 @@ CREATE TABLE -lauseet:
             id INTEGER NOT NULL,
             date_created DATETIME,
             date_modified DATETIME,
-            name VARCHAR(144) NOT NULL,
+            npc_name VARCHAR(144) NOT NULL,
             race VARCHAR(144) NOT NULL,
             location VARCHAR(144) NOT NULL,
             occupation VARCHAR(144) NOT NULL,
@@ -93,21 +100,21 @@ CREATE TABLE -lauseet:
 
 Tarkistetaan, onko kyseisellä nimellä kampanjaa:
 
-        SELECT * FROM campaign WHERE name LIKE "%name%";
+        SELECT * FROM campaign WHERE campaign_name LIKE "%campaign_name%";
 
 Kampanjan luominen, jos kyseisellä nimellä ei ole kampanjaa:
 
-        INSERT INTO campaign (date_created, date_modified, name, game_system, password) VALUES (current_date, current_date, name, game_system, password);
+        INSERT INTO campaign (date_created, date_modified, campaign_name, game_system, password) VALUES (current_date, current_date, campaign_name, game_system, password);
 
 2. "Opimme jotain uutta Beholderista, mutta Beholder on jo lisätty kampanjamme listaan. Tämän vuoksi haluan, että hirviöiden tietoja voi muokata helposti."
 
 Tarkistetaan, onko uudella nimellä hirviötä (tai NPC:tä):
 
-        SELECT * FROM creature WHERE name LIKE "%name%" AND creature.campaign_id = campaign_id;
+        SELECT * FROM creature WHERE creature_name LIKE "%creature_name%" AND creature.campaign_id = campaign_id;
 
 Hirviön (tai NPC:n) muuttaminen:
 
-        UPDATE creature SET date_modified = current_date, name = new_name, type = new_type, size = new_size, description = new_description WHERE id = id;
+        UPDATE creature SET date_modified = current_date, creature_name = new_name, type = new_type, size = new_size, description = new_description WHERE id = id;
 
 3. "Pelaan useammassa kampanjassa, minkä vuoksi haluan pystyä liittymään useampaan kampanjaan palvelussa."
 
@@ -129,7 +136,7 @@ Kampanjat, joihin käyttäjä on liittynyt, sekä näiden lukumäärä:
 
         SELECT COUNT(campaign.id) FROM campaign INNER JOIN association ON campaign.id = association.campaign_id AND association.account_id = current_user_id;
 
-6. "Kaverini loi kampanjan palveluun. Haluan, että kampanjan voi etsiä nimellä ja, jotta kampanjaan liittyminen olisi helppoa ja nopeaa."
+6. "Kaverini loi kampanjan palveluun. Haluan, että kampanjan voi etsiä nimellä, jotta kampanjaan liittyminen olisi helppoa ja nopeaa."
 
 7. "Kohtasin pelissä zombien näköisen otuksen, mutta en ole varma, oliko kyseessä zombie. Tämän vuoksi haluan, että palvelussa voi etsiä hirviöitä nimen ja tyypin perusteella."
 
@@ -176,15 +183,21 @@ Sovelluksessa on jokaisessa input-kentässä ohjeet oikeanlaiselle syötteelle, 
 3. Näkymässä on taulukkona kampanjan kaikki kyseiset entiteetit. Paina taulukon yläpuolella olevaa linkkiä "Add *entiteetti*"
 4. Syötä tarvittavat tiedot ja paina nappia "Add a new *entiteetti*"
 
-### Entiteettien muokkaaminen ja poistaminen
+### Entiteettien muokkaaminen
 
 1. Etsi entiteettiä taulukosta hakukentällä
 2. Paina nappia "Open *entiteetti*"
-3. Näkymässä näet entiteetin kaikki tiedot. Paina nappia "Modify *entiteetti*" tai "Remove *entiteetti*"
+3. Näkymässä näet entiteetin kaikki tiedot. Paina nappia "Modify *entiteetti*"
 
-### Kampanjan admin
+### Entiteettien poistaminen
 
-1. Kampanjan adminina, kun avaat kampanjan, ylhäällä on nappi "Manage campaign"
+1. Huom. poistaminen vaatii kampanjan admin-oikeudet
+2. Kun avaat entiteetin, "Modify *entiteetti*" napin vieressä on nappi "Delete *entiteetti*"
+
+### Kampanjan hallinnointi
+
+1. Huom. kampanjan hallinnointi vaatii kampanjan admin-oikeudet
+2. Kun avaat kampanjan, ylhäällä on nappi "Manage campaign"
 2. Painamalla nappia pääset näkymään, jossa voit poistaa muita käyttäjiä kampanjasta painamalla nappia "Remove account from campaign"
 3. Painamalla "Change password" pääset näkymään, jossa voit vaihtaa kampanjan salasanaa. Syötä tarvittavat tiedot ja paina nappia "Change password"
 4. Painamalla "Delete campaign" avautuu näkymä, jossa pyydetään kampanjan nimeä ja salasanaa. Syötä nämä ja paina nappia "Delete campaign"
@@ -195,3 +208,5 @@ Sovelluksessa on jokaisessa input-kentässä ohjeet oikeanlaiselle syötteelle, 
 2. Käyttäjä ei voi palauttaa unohtamaansa salasanaa
 3. Palvelussa ei ole yleistä admin-käyttäjää, joka voisi poistaa muita käyttäjiä
 4. Kampanjan tietoja ei voi muuttaa
+5. Kampanjan luomisessa/muokkaamisessa checkbox, jonka avulla päättää, onko kampanjalla salasanaa. Näin kampanjalta voi myöhemmin poistaa salasana
+6. Yleisiä hirviöitä, jotka lisätään kampanjaan (pelisysteemin mukaan?)
