@@ -130,4 +130,12 @@ h1{
 
 .nav-link2:hover {
     color:rgba(255, 255, 255, 0.8);
-  }
+}
+
+.centerImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    padding-bottom: 15px;
+}
