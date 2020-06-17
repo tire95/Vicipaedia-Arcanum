@@ -27,7 +27,7 @@ def creatures_form(campaign_id):
 @app.route("/campaigns/<campaign_id>/creatures/<creature_id>/remove/", methods=["POST"])
 @login_required
 def remove_creature(creature_id, campaign_id):
-    if Campaign.is_registered_to_campaign(campaign_id, current_user):
+    if Campaign.is_registered_to_campaign(campaign_id, current_user) and Campaign.is_campaign_admin(campaign_id, current_user):
         db.session.query(Creature).filter_by(id=creature_id).delete()
         db.session().commit()
         return redirect(url_for("creatures_index", campaign_id=campaign_id))
@@ -64,7 +64,7 @@ def creatures_create(campaign_id):
 @login_required
 def open_creature(creature_id, campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user):
-        return render_template("creatures/creature.html", creature=db.session.query(Creature).get(creature_id), campaign_id=campaign_id)
+        return render_template("creatures/creature.html", creature=db.session.query(Creature).get(creature_id), campaign_id=campaign_id, user_is_admin=Campaign.is_campaign_admin(campaign_id, current_user))
     return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
 

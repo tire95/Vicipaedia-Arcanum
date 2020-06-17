@@ -6,13 +6,13 @@ Sisällysluettelo:
 * [Käyttötapaukset ja niihin liittyvät kyselyt](#käyttötapaukset-ja-niihin-liittyvät-kyselyt)
 * [Asennusohje](#asennusohje)
 * [Käyttöohje](#käyttöohje)
-* [Rajoitteet/jatkokehitysideat](#rajoitteet/jatkokehitysideat)
+* [Rajoitteet (jatkokehitysideat)](#rajoitteet/jatkokehitysideat)
 
 ## Kuvaus
 
 Vicipaedia Arcanum (tästä lähtien *VA*) on nettipalvelimella toimiva tietosanakirja pöytäroolipeleille. *VA*:ssa käyttäjä voi luoda omalle pelilleen kampanjan, liittyä muiden luomiin kampanjoihin, ja päivittää kampanjaan liittyvää tietokantaa hirviöistä ja NPC:istä (non-player character).
 
-Kun kampanja luodaan, se voidaan suojata salasanalla, jotta vain tietyt käyttäjät voivat liittyä siihen. Kampanjaan liittyneet käyttäjät voivat vapaasti lisätä ja muokata kampanjan sisällä olevia entiteettejä. Kampanjan luojalla on kampanjassa admin-oikeudet, eli hän voi poistaa muita käyttäjiä kampanjasta, vaihtaa kampanjan salasanan, ja poistaa koko kampanjan.
+Kun kampanja luodaan, se voidaan suojata salasanalla, jotta vain tietyt käyttäjät voivat liittyä siihen. Kampanjaan liittyneet käyttäjät voivat vapaasti lisätä ja muokata kampanjan sisällä olevia entiteettejä. Kampanjan luojalla on kampanjassa admin-oikeudet, eli hän voi poistaa muita käyttäjiä, hirviöitä ja NPC:itä kampanjasta, vaihtaa kampanjan salasanan, ja poistaa koko kampanjan.
 
 Tällä hetkellä *VA*:ssa voit:
 
@@ -21,7 +21,8 @@ Tällä hetkellä *VA*:ssa voit:
 * luoda kampanjan
 * rekisteröityä muiden tekemiin kampanjoihin
 * katsoa kampanjan hirviö- ja NPC-listoja
-* lisätä, muokata ja poistaa hirviöitä ja NPC:itä
+* lisätä ja muokata hirviöitä ja NPC:itä
+* (kampanjan luojana) poistaa hirviöitä ja NPC:itä
 * (kampanjan luojana) poistaa henkilöitä kampanjasta
 * (kampanjan luojana) vaihtaa kampanjan salasanan
 * (kampanjan luojana) poistaa kampanjan
@@ -188,7 +189,7 @@ Sovelluksessa on jokaisessa input-kentässä ohjeet oikeanlaiselle syötteelle, 
 3. Painamalla "Change password" pääset näkymään, jossa voit vaihtaa kampanjan salasanaa. Syötä tarvittavat tiedot ja paina nappia "Change password"
 4. Painamalla "Delete campaign" avautuu näkymä, jossa pyydetään kampanjan nimeä ja salasanaa. Syötä nämä ja paina nappia "Delete campaign"
 
-## Rajoitteet/jatkokehitysideat
+## Rajoitteet (jatkokehitysideat)
 
 1. Käyttäjä ei tällä hetkellä voi vaihtaa salasanaansa
 2. Käyttäjä ei voi palauttaa unohtamaansa salasanaa

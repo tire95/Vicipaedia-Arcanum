@@ -24,11 +24,13 @@
         <input type="submit" class="btnSubmit" value="Modify creature"/>
     </form>
 </div>
+{% if user_is_admin %}
 <div class="span-custom">
     <form method="POST" action="{{ url_for('remove_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
         <input type="submit" class="btnSubmit" value="Remove creature"/>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     </form>
 </div>
+{% endif %}
 
 {% endblock %}

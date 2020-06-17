@@ -60,13 +60,9 @@ def campaigns_register(campaign_id):
 @login_required
 def campaigns_view(campaign_id):
     campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
-    if Campaign.is_campaign_admin(campaign_id, current_user):
-        return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
-        campaign_id = campaign_id, campaign_name = campaign.name, user_is_admin=True)
+    return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
+        campaign_id = campaign_id, campaign_name = campaign.name, user_is_admin=Campaign.is_campaign_admin(campaign_id, current_user))
 
-    if Campaign.is_registered_to_campaign(campaign_id, current_user):
-        return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
-        campaign_id = campaign_id, campaign_name = campaign.name, user_is_admin=False)
 
     return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
