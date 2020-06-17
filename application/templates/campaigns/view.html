@@ -2,6 +2,8 @@
 
 {% block body %}
 
+<h1>{{ campaign_name }}</h1>
+
 {% if user_is_admin %}
 <form method="GET" action="{{ url_for('campaigns_admin_view', campaign_id=campaign_id) }}">
   <input type="submit" class="btnSmall" value="Manage campaign"/>

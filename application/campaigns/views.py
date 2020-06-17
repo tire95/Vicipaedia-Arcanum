@@ -59,13 +59,14 @@ def campaigns_register(campaign_id):
 @app.route("/campaigns/<campaign_id>/view/", methods=["GET"])
 @login_required
 def campaigns_view(campaign_id):
+    campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
     if Campaign.is_campaign_admin(campaign_id, current_user):
         return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
-        campaign_id = campaign_id, user_is_admin=True)
+        campaign_id = campaign_id, campaign_name = campaign.name, user_is_admin=True)
 
     if Campaign.is_registered_to_campaign(campaign_id, current_user):
         return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
-        campaign_id = campaign_id, user_is_admin=False)
+        campaign_id = campaign_id, campaign_name = campaign.name, user_is_admin=False)
 
     return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
@@ -74,9 +75,10 @@ def campaigns_view(campaign_id):
 @login_required
 def campaigns_admin_view(campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user) and Campaign.is_campaign_admin(campaign_id, current_user):
+        campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
         accounts=Campaign.joined_accounts(campaign_id, current_user.id)
         number_of_joined_accounts=Campaign.number_of_joined_accounts(campaign_id, current_user.id)
-        return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=accounts, number_of_joined_accounts=number_of_joined_accounts)
+        return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=accounts, number_of_joined_accounts=number_of_joined_accounts, campaign_name=campaign.name)
     else:
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))
 
@@ -86,7 +88,7 @@ def campaigns_admin_view(campaign_id):
 def campaigns_remove_account(account_id, campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user) and Campaign.is_campaign_admin(campaign_id, current_user):
         Campaign.remove_account(account_id, campaign_id)
-        return render_template("campaigns/admin.html", campaign_id=campaign_id, accounts=Campaign.joined_accounts(campaign_id, current_user.id))
+        return redirect(url_for("campaigns_admin_view", campaign_id=campaign_id))
     else:
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))
 
@@ -95,8 +97,9 @@ def campaigns_remove_account(account_id, campaign_id):
 @login_required
 def campaigns_remove(campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user) and Campaign.is_campaign_admin(campaign_id, current_user):
+        campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
         if request.method == "GET":
-            return render_template("campaigns/remove.html", campaign_id = campaign_id, form = DeleteForm())
+            return render_template("campaigns/remove.html", campaign_id = campaign_id, form = DeleteForm(), campaign_name = campaign.name)
 
         form = DeleteForm(request.form)
 
@@ -107,7 +110,7 @@ def campaigns_remove(campaign_id):
                 db.session.commit()
                 return redirect(url_for("campaigns_list"))
 
-        return render_template("campaigns/remove.html", campaign_id = campaign_id, form = form, error = "Wrong name and/or password")
+        return render_template("campaigns/remove.html", campaign_id = campaign_id, form = form, campaign_name = campaign.name, error = "Wrong name and/or password")
 
     else:
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))

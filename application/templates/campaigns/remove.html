@@ -1,6 +1,6 @@
 {% extends "layout2.html" %}
 {% block body %}
-<h1>You are about to delete the campaign.</h1>
+<h1>You are about to delete the campaign "{{ campaign_name }}"</h1>
 <form method="POST" action="{{ url_for('campaigns_remove', campaign_id = campaign_id) }}">
     {{ form.csrf_token }}
     <p>Are you sure you want to delete the campaign? This action is irreversible, and all the creatures and NPCs added to the campaign will be deleted.</p>
