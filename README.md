@@ -13,7 +13,8 @@ Sisällysluettelo:
    - [Entiteettien muokkaaminen](#entiteettien-muokkaaminen)
    - [Entiteettien poistaminen](#entiteettien-poistaminen)
    - [Kampanjan hallinnointi](#kampanjan-hallinnointi)
-* [Rajoitteet (jatkokehitysideat)](#rajoitteet-jatkokehitysideat)
+* [Rajoitteet](#rajoitteet)
+* [Jatkokehitysideat](#jatkokehitysideat)
 
 ## Kuvaus
 
@@ -98,39 +99,39 @@ CREATE TABLE -lauseet:
 
 1. "Haluan suojata luomani kampanjan salasanalla, jotta vain haluamani henkilöt voivat liittyä siihen."
 
-Tarkistetaan, onko kyseisellä nimellä kampanjaa:
+   Tarkistetaan, onko kyseisellä nimellä kampanjaa:
 
         SELECT * FROM campaign WHERE campaign_name LIKE "%campaign_name%";
 
-Kampanjan luominen, jos kyseisellä nimellä ei ole kampanjaa:
+   Kampanjan luominen, jos kyseisellä nimellä ei ole kampanjaa:
 
         INSERT INTO campaign (date_created, date_modified, campaign_name, game_system, password) VALUES (current_date, current_date, campaign_name, game_system, password);
 
 2. "Opimme jotain uutta Beholderista, mutta Beholder on jo lisätty kampanjamme listaan. Tämän vuoksi haluan, että hirviöiden tietoja voi muokata helposti."
 
-Tarkistetaan, onko uudella nimellä hirviötä (tai NPC:tä):
+   Jos halutaan muuttaa nimeä, tarkistetaan, onko uudella nimellä hirviötä (tai NPC:tä):
 
         SELECT * FROM creature WHERE creature_name LIKE "%creature_name%" AND creature.campaign_id = campaign_id;
 
-Hirviön (tai NPC:n) muuttaminen:
+   Hirviön (tai NPC:n) muuttaminen:
 
         UPDATE creature SET date_modified = current_date, creature_name = new_name, type = new_type, size = new_size, description = new_description WHERE id = id;
 
 3. "Pelaan useammassa kampanjassa, minkä vuoksi haluan pystyä liittymään useampaan kampanjaan palvelussa."
 
-Uuden liitoksen luominen liitostauluun:
+   Uuden liitoksen luominen liitostauluun:
 
         INSERT INTO association (account_id, campaign_id) VALUES (current_user_id, campaign_id);
 
 4. "Haluan pitää eri kampanjoissa oppimani tiedot erillään toisistaan, koska kampanjoiden hirviöt voivat poiketa toisistaan paljonkin."
 
-Tiettyyn kampanjaan liittyvien NPC:iden (tai hirviöiden) hakeminen:
+   Tiettyyn kampanjaan liittyvien NPC:iden (tai hirviöiden) hakeminen:
 
         SELECT * FROM npc WHERE npc.campaign_id = campaign_id;
 
 5. "Haluan helposti nähdä kampanjat, joihin olen jo liittynyt."
 
-Kampanjat, joihin käyttäjä on liittynyt, sekä näiden lukumäärä:
+   Kampanjat, joihin käyttäjä on liittynyt, sekä näiden lukumäärä:
 
         SELECT * FROM campaign INNER JOIN association ON campaign.id = association.campaign_id AND association.account_id = current_user_id;
 
@@ -145,10 +146,17 @@ Kohtien 6 ja 7 toiminnallisuus on toteutettu front endissä.
 ## Asennusohje
 
 1. Varmista, että sinulla on asennettuna [vähintään Pythonin versio 3.5](https://www.python.org/downloads/) sekä Pythonin [pip](https://packaging.python.org/key_projects/#pip) (asentuu tavallisesti Pythonin kanssa) ja [venv-kirjasto](https://docs.python.org/3/library/venv.html)
-2. Aktivoi kansiossa `/Vicipaedia-Arcanum/venv/Scripts` oleva tiedosto `activate.bat`
-3. Navigoi terminaalissa projektin juurikansioon ja syötä komento `pip install -r requirements.txt`; näin pip asentaa tarvittavat kirjastot
-4. Käynnistä sovellus suorittamalla tiedosto `run.py`. Sovellus pyörii nyt lokaalisti koneellasi
-5. Halutessasi sovellus on valmis siirrettäväksi pilveen. Tiedostossa `__init__.py` voit muokata, mitä tietokannanhallintajärjestelmää käytetään
+2. Luo kansioon virtuaaliympäristö komennolla
+
+         python3 -m venv venv
+      
+3. Aktivoi kansiossa `/Vicipaedia-Arcanum/venv/Scripts` oleva tiedosto `activate.bat` (Linuxilla riittää komento `source venv/bin/activate`)
+4. Navigoi terminaalissa projektin juurikansioon ja syötä komento `pip install -r requirements.txt`; näin pip asentaa tarvittavat kirjastot
+5. Käynnistä sovellus suorittamalla tiedosto `run.py`. Sovellus pyörii nyt lokaalisti koneellasi, tietokannanhallinnassa käytetään SQLiteä, ja debug-muoto on päällä
+6. Halutessasi sovellus on valmis siirrettäväksi pilveen. Tiedostossa `__init__.py` voit muokata, mitä tietokannanhallintajärjestelmää käytetään. Tällä hetkellä on määritelty, että Herokussa käytetään PostgreSQL:ää seuraavalla koodilla
+
+         if os.environ.get("HEROKU"):
+            app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 
 ## Käyttöohje
 
@@ -202,11 +210,14 @@ Sovelluksessa on jokaisessa input-kentässä ohjeet oikeanlaiselle syötteelle, 
 3. Painamalla "Change password" pääset näkymään, jossa voit vaihtaa kampanjan salasanaa. Syötä tarvittavat tiedot ja paina nappia "Change password"
 4. Painamalla "Delete campaign" avautuu näkymä, jossa pyydetään kampanjan nimeä ja salasanaa. Syötä nämä ja paina nappia "Delete campaign"
 
-## Rajoitteet (jatkokehitysideat)
+## Rajoitteet
 
 1. Käyttäjä ei tällä hetkellä voi vaihtaa salasanaansa
 2. Käyttäjä ei voi palauttaa unohtamaansa salasanaa
 3. Palvelussa ei ole yleistä admin-käyttäjää, joka voisi poistaa muita käyttäjiä
 4. Kampanjan tietoja ei voi muuttaa
-5. Kampanjan luomisessa/muokkaamisessa checkbox, jonka avulla päättää, onko kampanjalla salasanaa. Näin kampanjalta voi myöhemmin poistaa salasana
-6. Yleisiä hirviöitä, jotka lisätään kampanjaan (pelisysteemin mukaan?)
+
+## Jatkokehitysideat
+
+1. Kampanjan luomisessa/muokkaamisessa checkbox, jonka avulla päättää, onko kampanjalla salasanaa. Näin kampanjalta voi myöhemmin poistaa salasana
+2. Yleisiä hirviöitä, jotka lisätään kampanjaan (pelisysteemin mukaan?)
