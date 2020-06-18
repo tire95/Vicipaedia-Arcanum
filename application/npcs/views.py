@@ -26,7 +26,7 @@ def npcs_form(campaign_id):
 
 @app.route("/campaigns/<campaign_id>/npcs/<npc_id>/remove/", methods=["POST"])
 @login_required
-def remove_npc(npc_id, campaign_id):
+def npcs_remove(npc_id, campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user) and Campaign.is_campaign_admin(campaign_id, current_user):
         db.session.query(Npc).filter_by(id=npc_id).delete()
         db.session().commit()
@@ -62,7 +62,7 @@ def npcs_create(campaign_id):
 
 @app.route("/campaigns/<campaign_id>/npcs/<npc_id>/", methods=["GET"])
 @login_required
-def open_npc(npc_id, campaign_id):
+def npcs_open(npc_id, campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user):
         return render_template("npcs/npc.html", npc=db.session.query(Npc).get(npc_id), campaign_id=campaign_id, user_is_admin=Campaign.is_campaign_admin(campaign_id, current_user))
     return redirect(url_for("campaigns_register", campaign_id=campaign_id))
@@ -70,7 +70,7 @@ def open_npc(npc_id, campaign_id):
 
 @app.route("/campaigns/<campaign_id>/npcs/<npc_id>/modify", methods=["GET", "POST"])
 @login_required
-def modify_npc(npc_id, campaign_id):
+def npcs_modify(npc_id, campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user):
 
         npc = db.session.query(Npc).get(npc_id)
@@ -101,7 +101,7 @@ def modify_npc(npc_id, campaign_id):
 
         db.session.commit()
 
-        return redirect(url_for("open_npc", npc_id=npc_id, campaign_id=campaign_id))
+        return redirect(url_for("npcs_open", npc_id=npc_id, campaign_id=campaign_id))
 
     return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 

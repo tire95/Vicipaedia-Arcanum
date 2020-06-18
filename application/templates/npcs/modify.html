@@ -3,9 +3,9 @@
 {% block body %}
 <h1>Modify NPC: {{ npc.npc_name }}</h1>
 
-<a class="customLink" href="{{ url_for('open_npc', npc_id=npc.id, campaign_id=campaign_id) }}">Back to NPC</a>
+<a class="customLink" href="{{ url_for('npcs_open', npc_id=npc.id, campaign_id=campaign_id) }}">Back to NPC</a>
 
-<form method="POST" action="{{ url_for('modify_npc', npc_id=npc.id, campaign_id=campaign_id) }}">
+<form method="POST" action="{{ url_for('npcs_modify', npc_id=npc.id, campaign_id=campaign_id) }}">
     {{ form.csrf_token }}
     <div class="row">
         <div class="span-custom">

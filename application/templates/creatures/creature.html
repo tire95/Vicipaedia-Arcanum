@@ -20,13 +20,13 @@
     </tbody>
 </table>
 <div class="span-custom">
-    <form method="GET" action="{{ url_for('modify_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
+    <form method="GET" action="{{ url_for('creatures_modify', creature_id=creature.id, campaign_id=campaign_id) }}">
         <input type="submit" class="btnSubmit" value="Modify creature"/>
     </form>
 </div>
 {% if user_is_admin %}
 <div class="span-custom">
-    <form method="POST" action="{{ url_for('remove_creature', creature_id=creature.id, campaign_id=campaign_id) }}">
+    <form method="POST" action="{{ url_for('creatures_remove', creature_id=creature.id, campaign_id=campaign_id) }}">
         <input type="submit" class="btnSubmit" value="Remove creature"/>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     </form>

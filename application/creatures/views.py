@@ -26,7 +26,7 @@ def creatures_form(campaign_id):
 
 @app.route("/campaigns/<campaign_id>/creatures/<creature_id>/remove/", methods=["POST"])
 @login_required
-def remove_creature(creature_id, campaign_id):
+def creatures_remove(creature_id, campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user) and Campaign.is_campaign_admin(campaign_id, current_user):
         db.session.query(Creature).filter_by(id=creature_id).delete()
         db.session().commit()
@@ -62,7 +62,7 @@ def creatures_create(campaign_id):
 
 @app.route("/campaigns/<campaign_id>/creatures/<creature_id>/", methods=["GET"])
 @login_required
-def open_creature(creature_id, campaign_id):
+def creatures_open(creature_id, campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user):
         return render_template("creatures/creature.html", creature=db.session.query(Creature).get(creature_id), campaign_id=campaign_id, user_is_admin=Campaign.is_campaign_admin(campaign_id, current_user))
     return redirect(url_for("campaigns_register", campaign_id=campaign_id))
@@ -70,7 +70,7 @@ def open_creature(creature_id, campaign_id):
 
 @app.route("/campaigns/<campaign_id>/creatures/<creature_id>/modify", methods=["GET", "POST"])
 @login_required
-def modify_creature(creature_id, campaign_id):
+def creatures_modify(creature_id, campaign_id):
     if Campaign.is_registered_to_campaign(campaign_id, current_user):
 
         creature = db.session.query(Creature).get(creature_id)
@@ -99,7 +99,7 @@ def modify_creature(creature_id, campaign_id):
 
         db.session.commit()
 
-        return redirect(url_for("open_creature", creature_id=creature_id, campaign_id=campaign_id))
+        return redirect(url_for("creatures_open", creature_id=creature_id, campaign_id=campaign_id))
 
     return redirect(url_for("campaigns_register", campaign_id=campaign_id))
 
