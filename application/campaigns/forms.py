@@ -12,7 +12,7 @@ class RegisterForm(FlaskForm):
 
 
 class DeleteForm(FlaskForm):
-    name = StringField("Campaign's name", [validators.DataRequired(), validators.Length(min=2, max=144)], render_kw={"placeholder": "Campaign's name"})
+    campaign_name = StringField("Campaign's name", [validators.DataRequired(), validators.Length(min=2, max=144)], render_kw={"placeholder": "Campaign's name"})
     password = PasswordField("Campaign's password", render_kw={"placeholder": "Campaign's password"})
   
 
