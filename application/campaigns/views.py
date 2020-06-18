@@ -47,11 +47,18 @@ def campaigns_register(campaign_id):
     campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
     form = RegisterForm(request.form)
 
-    # If the campaign has no password or the password is correct, register the account
-    if not campaign.password or (form.validate() and bcrypt.check_password_hash(campaign.password, form.password.data)):
+    if not campaign.password:
         campaign.accounts.append(current_user)
         db.session.commit()
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))
+    
+    passwordIsCorrect = bcrypt.check_password_hash(campaign.password, form.password.data)
+    if form.validate() and passwordIsCorrect:
+        campaign.accounts.append(current_user)
+        db.session.commit()
+        return redirect(url_for("campaigns_view", campaign_id = campaign_id))
+    elif not passwordIsCorrect:
+        return render_template("campaigns/register.html", form = form, campaign_id = campaign_id, error="Wrong password")
 
     return render_template("campaigns/register.html", form = form, campaign_id = campaign_id)
 
@@ -59,12 +66,13 @@ def campaigns_register(campaign_id):
 @app.route("/campaigns/<campaign_id>/view/", methods=["GET"])
 @login_required
 def campaigns_view(campaign_id):
-    campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
-    return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
-        campaign_id = campaign_id, campaign_name = campaign.campaign_name, user_is_admin=Campaign.is_campaign_admin(campaign_id, current_user))
+    if Campaign.is_registered_to_campaign(campaign_id, current_user):
+        campaign = db.session.query(Campaign).filter_by(id=campaign_id).first()
+        return render_template("campaigns/view.html", number_of_creatures=Campaign.number_of_creatures(campaign_id), number_of_npcs=Campaign.number_of_npcs(campaign_id), 
+            campaign_id = campaign_id, campaign_name = campaign.campaign_name, user_is_admin=Campaign.is_campaign_admin(campaign_id, current_user))
 
 
-    return redirect(url_for("campaigns_register", campaign_id=campaign_id))
+    return redirect(url_for("campaigns_list"))
 
 
 @app.route("/campaigns/<campaign_id>/admin", methods=["GET"])
