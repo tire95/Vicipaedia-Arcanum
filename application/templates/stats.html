@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Fun stats</h1>
+
+<div class="container">
+    <p>In Vicipaedia Arcanum, there are</p>
+    <ul>
+        <li>{{ nmbr_of_campaigns }} campaigns</li>
+        <li>{{ nmbr_of_creatures }} creatures across all campaigns</li>
+        <li>{{ nmbr_of_npcs }} NPCs across all campaigns</li>
+        <li>on average, {{ average_of_creatures_for_campaigns }} creatures in a campaign</li>
+        <li>on average, {{ average_of_npcs_for_campaigns }} NPCs in a campaign</li>
+    </ul>
+</div>
+
+{% endblock %}

@@ -52,13 +52,14 @@ def campaigns_register(campaign_id):
         db.session.commit()
         return redirect(url_for("campaigns_view", campaign_id = campaign_id))
     
-    passwordIsCorrect = bcrypt.check_password_hash(campaign.password, form.password.data)
-    if form.validate() and passwordIsCorrect:
-        campaign.accounts.append(current_user)
-        db.session.commit()
-        return redirect(url_for("campaigns_view", campaign_id = campaign_id))
-    elif not passwordIsCorrect:
-        return render_template("campaigns/register.html", form = form, campaign_id = campaign_id, error="Wrong password")
+    if(form.password.data):
+        passwordIsCorrect = bcrypt.check_password_hash(campaign.password, form.password.data)
+        if form.validate() and passwordIsCorrect:
+            campaign.accounts.append(current_user)
+            db.session.commit()
+            return redirect(url_for("campaigns_view", campaign_id = campaign_id))
+        elif not passwordIsCorrect:
+            return render_template("campaigns/register.html", form = form, campaign_id = campaign_id, error="Wrong password")
 
     return render_template("campaigns/register.html", form = form, campaign_id = campaign_id)
 

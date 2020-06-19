@@ -66,3 +66,13 @@ class Campaign(BaseModel):
     def is_campaign_admin(campaign_id, user):
         campaign = db.session.query(Campaign).filter(Campaign.id==campaign_id).first()
         return campaign.admin_id == user.id
+
+    @staticmethod
+    def average_of_creatures_for_campaigns():
+        stmt = text("SELECT AVG(count) FROM (SELECT COUNT(creature.id) as count FROM creature, campaign WHERE creature.campaign_id = campaign.id GROUP BY campaign.id) AS counts")
+        return db.engine.execute(stmt).scalar()
+
+    @staticmethod
+    def average_of_npcs_for_campaigns():
+        stmt = text("SELECT AVG(count) FROM (SELECT COUNT(npc.id) as count FROM npc, campaign WHERE npc.campaign_id = campaign.id GROUP BY campaign.id) AS counts")
+        return db.engine.execute(stmt).scalar()
